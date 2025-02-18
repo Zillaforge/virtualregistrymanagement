@@ -1,0 +1,24 @@
+[Unit]
+Description=VirtualRegistryManagement
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/bin/VirtualRegistryManagement -c /etc/ASUS/virtual-registry-management.yaml serve
+LimitNOFILE=1048576
+LimitNPROC=1048576
+NoNewPrivileges=true
+PrivateDevices=yes
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+Restart=on-failure
+StartLimitBurst=5
+StartLimitInterval=30s
+TasksMax=infinity
+
+[Install]
+WantedBy=multi-user.target

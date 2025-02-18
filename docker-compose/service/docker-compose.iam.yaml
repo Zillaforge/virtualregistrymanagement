@@ -1,0 +1,27 @@
+version: "2"
+services:
+  pegasus-cloud-iamserver:
+    image: ociscloud/golang:1.22.4-${PLATFORM:-ubuntu-amd64}
+    container_name: iam-server
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.100.0
+    working_dir: /home/${IAM_FOLDER_NAME}
+    environment:
+      - GOPROXY=${GOPROXY}
+    volumes:
+      - ${PWD}/..:/home
+      - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
+    entrypoint: ["tail", "-f", "/dev/null"]
+    ports:
+      - "3891:3891" # ldap
+      - "5051:5051" # grpc
+      - "8084:8084" # http
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network
+volumes:  
+  pegasus-cloud-eventpublishplugin:
+    name: pegasus-cloud-eventpublishplugin
+    external: true

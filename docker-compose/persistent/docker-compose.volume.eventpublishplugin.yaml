@@ -1,0 +1,16 @@
+services: 
+  pegauss-cloud-eventpublishplugin:
+    container_name: eventpublishplugin
+    image: ociscloud/debugger:1.0.2
+    volumes:
+      - pegasus-cloud-eventpublishplugin:/mnt
+    networks: 
+      pegasus-cloud-network:
+          ipv4_address: 172.40.0.8
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network
+volumes:
+  pegasus-cloud-eventpublishplugin:
+    name: pegasus-cloud-eventpublishplugin

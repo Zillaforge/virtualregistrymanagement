@@ -1,0 +1,19 @@
+version: "2"
+services:
+  pegasus-cloud-jaeger:
+    image: jaegertracing/all-in-one:1.21
+    container_name: jaeger
+    volumes:
+      - pegasus-cloud-jaeger-data:/tmp
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.203.0
+    ports:
+      - "16686:16686"
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network
+volumes:
+  pegasus-cloud-jaeger-data:
+    name: pegasus-cloud-jaeger-data

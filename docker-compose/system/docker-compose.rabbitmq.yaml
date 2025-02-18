@@ -1,0 +1,20 @@
+version: "2"
+services:
+  pegasus-cloud-rabbitmq:
+    image: ociscloud/rabbitmq:3.9.13
+    container_name: rabbitmq
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.201.0
+    volumes:
+      - pegasus-cloud-rabbitmq-data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network
+volumes:
+  pegasus-cloud-rabbitmq-data:
+    name: pegasus-cloud-rabbitmq-data

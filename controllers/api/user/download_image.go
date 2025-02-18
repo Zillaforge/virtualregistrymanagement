@@ -1,0 +1,115 @@
+package user
+
+import (
+	cnt "VirtualRegistryManagement/constants"
+	"VirtualRegistryManagement/controllers/api"
+	"VirtualRegistryManagement/utility"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	"pegasus-cloud.com/aes/toolkits/tracer"
+	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	cCnt "pegasus-cloud.com/aes/virtualregistrymanagementclient/constants"
+	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
+	"pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+)
+
+type DownloadImageInput struct {
+	Filepath string `json:"filepath" binding:"required"`
+
+	TagID   string `json:"-"`
+	Creator string `json:"-"`
+	_       struct{}
+}
+
+type DownloadImageOutput struct {
+	_ struct{}
+}
+
+func DownloadImage(c *gin.Context) {
+	var (
+		input = &DownloadImageInput{
+			TagID:   c.GetString(cnt.CtxTagID),
+			Creator: c.GetString(cnt.CtxCreator),
+		}
+		output       = &DownloadImageOutput{}
+		err          error
+		requestID        = utility.MustGetContextRequestID(c)
+		funcName         = tkUtils.NameOfFunction().Name()
+		statusCode   int = http.StatusOK
+		supportRoles     = map[string]bool{
+			cnt.TenantOwner.String(): true,
+			cnt.TenantAdmin.String(): true,
+		}
+	)
+
+	f := tracer.StartWithGinContext(c, funcName)
+	defer f(tracer.Attributes{
+		"input":      &input,
+		"output":     &output,
+		"error":      &err,
+		"statusCode": &statusCode,
+	})
+
+	if err = c.ShouldBindJSON(input); err != nil {
+		zap.L().With(
+			zap.String(cnt.Controller, "c.ShouldBindJSON(...)"),
+			zap.String(cnt.RequestID, requestID),
+			zap.Any("obj", input),
+		).Error(err.Error())
+		statusCode = http.StatusBadRequest
+		err = api.Malformed(err)
+		utility.ResponseWithType(c, statusCode, err)
+		return
+	}
+
+	// check permission, only creator and tenant-owner, tenant-admin allow upload to exist tag
+	if role := c.GetString(cnt.CtxTenantRole); !supportRoles[role] &&
+		input.Creator != c.GetString(cnt.CtxUserID) {
+		zap.L().With(
+			zap.String(cnt.Controller, "vrm.GetRepository(...)"),
+			zap.String(cnt.RequestID, requestID),
+			zap.String("role", role),
+			zap.String("token-user", c.GetString(cnt.CtxUserID)),
+			zap.String("creator", input.Creator),
+		).Info(cnt.UserAPIUnauthorizedOpErrMsg)
+		statusCode = http.StatusUnauthorized
+		err = tkErr.New(cnt.UserAPIUnauthorizedOpErr)
+		utility.ResponseWithType(c, statusCode, err)
+		return
+	}
+
+	downloadTagInput := &pb.ImageDataInput{
+		TagID:    input.TagID,
+		Filepath: input.Filepath,
+	}
+	err = vrm.DownloadTag(downloadTagInput, c)
+	if err != nil {
+		if e, ok := tkErr.IsError(err); ok {
+			switch e.Code() {
+			case cCnt.GRPCNotSupportTypeErr.Code():
+				statusCode = http.StatusBadRequest
+				utility.ResponseWithType(c, statusCode, err)
+				return
+			case cCnt.GRPCFileExistErr.Code():
+				statusCode = http.StatusBadRequest
+				err = tkErr.New(cnt.UserAPIFileExistErr)
+				utility.ResponseWithType(c, statusCode, err)
+				return
+			}
+		}
+		zap.L().With(
+			zap.String(cnt.Controller, "vrm.DownloadTag(...)"),
+			zap.String(cnt.RequestID, requestID),
+			zap.Any("input", downloadTagInput),
+		).Error(err.Error())
+		statusCode = http.StatusInternalServerError
+		err = tkErr.New(cnt.UserAPIInternalServerErr)
+		utility.ResponseWithType(c, statusCode, err)
+		return
+	}
+
+	utility.ResponseWithType(c, statusCode, output)
+}

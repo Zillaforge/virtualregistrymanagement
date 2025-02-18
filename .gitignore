@@ -1,0 +1,12 @@
+.vscode
+.DS_Store
+data/
+log/
+deploy.sh
+coverage.out
+ansible/files/*.rpm
+tests/bin/*
+tmp/
+@plugin/*
+@client/*
+*.sif

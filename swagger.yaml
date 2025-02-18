@@ -1,0 +1,3197 @@
+openapi: 3.0.0
+info:
+  title: Virtual Registry Management RESTful API
+  description: ASUS Enterprise Virtual Registry Management 以 Portal 需求列出其需要的 Restful API Response 以 Json 格式呈現
+  version: 1.0.0
+  termsOfService: "http://0.0.0.0:8109"
+  contact:
+    email: "osci_admin@asus.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: http://127.0.0.1:8109/vrm/api/v1/
+    description: local develop environment
+tags:
+  - name: "User/Project"
+    description: "Project RESTful APIs"
+  - name: "User/Image"
+    description: "Image RESTful APIs"
+  - name: "User/Snapshot"
+    description: "Snapshot RESTful APIs"
+  - name: "User/Export"
+    description: "Export RESTful APIs"
+  - name: "User/Repository"
+    description: "Repository RESTful APIs"
+  - name: "User/Tag"
+    description: "Tag RESTful APIs"
+  - name: "User/MemberAcl"
+    description: "MemberAcl RESTful APIs"
+  - name: "User/ProjectAcl"
+    description: "ProjectAcl RESTful APIs"
+  - name: "Admin/Project"
+    description: "Project RESTful APIs"
+  - name: "Admin/Image"
+    description: "Image RESTful APIs"
+  - name: "Admin/Snapshot"
+    description: "Snapshot RESTful APIs"
+  - name: "Admin/Export"
+    description: "Export RESTful APIs"
+  - name: "Admin/Repository"
+    description: "Repository RESTful APIs"
+  - name: "Admin/Tag"
+    description: "Tag RESTful APIs"
+  - name: "Admin/MemberAcl"
+    description: "MemberAcl RESTful APIs"
+  - name: "Admin/ProjectAcl"
+    description: "ProjectAcl RESTful APIs"
+paths:
+##
+#
+#   User RESTful APIs
+#
+##
+## project api
+  '/project/{project-id}':
+    get:
+      summary: 取得 project 資訊
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Project"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getProjectInfoOutput'
+              examples:
+                getProjectInfoOutput:
+                  $ref: '#/components/examples/getProjectInfoOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+## image api
+  '/project/{project-id}/upload':
+    post:
+      summary: 上傳 Image
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Image"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/uploadImageInput'
+            examples:
+              uploadImageInput:
+                $ref: '#/components/examples/uploadImageInput'
+          application/json/repositoryId:
+            schema:
+              $ref: '#/components/schemas/uploadImageInput.repositoryId'
+            examples:
+              uploadImageInput.repositoryId:
+                $ref: '#/components/examples/uploadImageInput.repositoryId'
+          application/json/tagId:
+            schema:
+              $ref: '#/components/schemas/uploadImageInput.tagId'
+            examples:
+              uploadImageInput.tagId:
+                $ref: '#/components/examples/uploadImageInput.tagId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/uploadImageOutput'
+              examples:
+                uploadImageOutput:
+                  $ref: '#/components/examples/uploadImageOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/tag/{tag-id}/download':
+    post:
+      summary: 下載 Image
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Image"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/downloadImageInput'
+            examples:
+              downloadImageInput:
+                $ref: '#/components/examples/downloadImageInput'
+      responses:
+        '200':
+          description: "OK"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## snapshot api
+  '/project/{project-id}/server/{server-id}/snapshot':
+    post:
+      summary: 對 Server 建立 snapshot
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Snapshot"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.serverId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createSnapshotInput'
+            examples:
+              createSnapshotInput:
+                $ref: '#/components/examples/createSnapshotInput'
+          application/json/repositoryId:
+            schema:
+              $ref: '#/components/schemas/createSnapshotInput.repositoryId'
+            examples:
+              createSnapshotInput.repositoryId:
+                $ref: '#/components/examples/createSnapshotInput.repositoryId'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createSnapshotOutput'
+              examples:
+                createSnapshotOutput:
+                  $ref: '#/components/examples/createSnapshotOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## export api
+  '/project/{project-id}/exports':
+    get:
+      summary: 列出所有的匯出資訊
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Export"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：repository-id, tag-id, status
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listExportsOutput'
+              examples:
+                listExportsOutput:
+                  $ref: '#/components/examples/listExportsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/export/{export-id}':
+    get:
+      summary: 取得指定匯出資訊
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Export"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.exportId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getExportOutput'
+              examples:
+                getExportOutput:
+                  $ref: '#/components/examples/getExportOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 刪除指定匯出紀錄
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Export"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.exportId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## repository api
+  '/project/{project-id}/repositories':
+    get:
+      summary: 列出所有的 repositories
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：os, creator, project-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listRepositoriesOutput'
+              examples:
+                listRepositoriesOutput:
+                  $ref: '#/components/examples/listRepositoriesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/repository':
+    post:
+      summary: 創建 repository
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createRepositoryInput'
+            examples:
+              createRepositoryInput:
+                $ref: '#/components/examples/createRepositoryInput'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRepositoryOutput'
+              examples:
+                createRepositoryOutput:
+                  $ref: '#/components/examples/createRepositoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/repository/{repository-id}':
+    get:
+      summary: 取得指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.repositoryId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getRepositoryOutput'
+              examples:
+                getRepositoryOutput:
+                  $ref: '#/components/examples/getRepositoryOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.repositoryId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateRepositoryInput'
+            examples:
+              updateRepositoryInput:
+                $ref: '#/components/examples/updateRepositoryInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateRepositoryOutput'
+              examples:
+                updateModelOutput:
+                  $ref: '#/components/examples/updateRepositoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 棄用指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.repositoryId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## tag api
+  '/project/{project-id}/tags':
+    get:
+      summary: 取得可使用的所有 tags
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：project-id
+        - in: query
+          name: adminRole
+          schema:
+            type: string
+          description: set false to disable admin ability if admin called and wanted
+        - in: query
+          name: creator
+          schema:
+            type: string
+          description: belong to the current user, default is true
+        - in: query
+          name: projectLimit
+          schema:
+            type: string
+          description: share to current User, default is true
+        - in: query
+          name: projectPublic
+          schema:
+            type: string
+          description: public in project, default is true
+        - in: query
+          name: globalLimit
+          schema:
+            type: string
+          description: share to current project, default is true
+        - in: query
+          name: globalPublic
+          schema:
+            type: string
+          description: public in namespace, default is true
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTagsOutput'
+              examples:
+                listTagsOutput:
+                  $ref: '#/components/examples/listTagsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/repository/{repository-id}/tags':
+    get:
+      summary: 取得此 repository 的所有 tags
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：status, type
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTagsOutput'
+              examples:
+                listTagsOutput:
+                  $ref: '#/components/examples/listTagsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/repository/{repository-id}/tag':
+    post:
+      summary: 在 repository 創建 tag
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.repositoryId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createTagInput'
+            examples:
+              createTagInput:
+                $ref: '#/components/examples/createTagInput'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createTagOutput'
+              examples:
+                createTagOutput:
+                  $ref: '#/components/examples/createTagOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/tag/{tag-id}':
+    get:
+      summary: 取得指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getTagOutput'
+              examples:
+                getTagOutput:
+                  $ref: '#/components/examples/getTagOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateTagInput'
+            examples:
+              updateTagInput:
+                $ref: '#/components/examples/updateTagInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateTagOutput'
+              examples:
+                updateTagOutput:
+                  $ref: '#/components/examples/updateTagOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 棄用指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## member-acl api
+  '/project/{project-id}/tag/{tag-id}/memberacls':
+    get:
+      summary: 取得此 tag 的所有 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：user-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listMemberAclsOutput'
+              examples:
+                listMemberAclsOutput:
+                  $ref: '#/components/examples/listMemberAclsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/repository/{repository-id}/memberacl':
+    post:
+      summary: 在 repository 創建 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.repositoryId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createMemberAclInput.batch'
+            examples:
+              createMemberAclInput:
+                $ref: '#/components/examples/createMemberAclInput.batch'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createMemberAclOutput'
+              examples:
+                createMemberAclOutput:
+                  $ref: '#/components/examples/createMemberAclOutput.batch'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/project/{project-id}/tag/{tag-id}/memberacl':
+    post:
+      summary: 在指定的 tag 創建 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createMemberAclInput'
+            examples:
+              createMemberAclInput:
+                $ref: '#/components/examples/createMemberAclInput'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createMemberAclOutput'
+              examples:
+                createMemberAclOutput:
+                  $ref: '#/components/examples/createMemberAclOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/project/{project-id}/memberacl/{member-acl-id}':
+    delete:
+      summary: 刪除指定的 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+      - "User/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.memberAclId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## project-acl api
+  '/project/{project-id}/tag/{tag-id}/share':
+    post:
+      summary: 在指定的 tag 創建 project-acl 分享給其他成員使用
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/ProjectAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createProjectAclOutput'
+              examples:
+                createProjectAclOutput:
+                  $ref: '#/components/examples/createProjectAclOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 指定的 tag 停止分享給其他成員使用
+      security:
+        - bearerAuth: []
+      tags:
+        - "User/ProjectAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+##
+#
+#   Admin RESTful APIs
+#
+##
+## project api
+  '/admin/projects':
+    get:
+      summary: 取得 project 資訊
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Project"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/query.namespace'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listProjectsOutput'
+              examples:
+                listProjectsOutput:
+                  $ref: '#/components/examples/listProjectsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/project/{project-id}':
+    get:
+      summary: 取得 project 資訊
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Project"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getProjectInfoOutput'
+              examples:
+                getProjectInfoOutput:
+                  $ref: '#/components/examples/getProjectInfoOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 project
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateProjectInput'
+            examples:
+              updateProjectInput:
+                $ref: '#/components/examples/updateProjectInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateProjectOutput'
+              examples:
+                updateProjectOutput:
+                  $ref: '#/components/examples/updateProjectOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## image api
+  '/admin/import':
+    post:
+      summary: 匯入 Image (已存在於openstack)
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Image"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/importImageInput'
+            examples:
+              importImageInput:
+                $ref: '#/components/examples/importImageInput'
+          application/json/repositoryId:
+            schema:
+              $ref: '#/components/schemas/importImageInput.repositoryId'
+            examples:
+              importImageInput.repositoryId:
+                $ref: '#/components/examples/importImageInput.repositoryId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/importImageOutput'
+              examples:
+                importImageOutput:
+                  $ref: '#/components/examples/importImageOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+  '/admin/upload':
+    post:
+      summary: 上傳 Image
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Image"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/uploadImageInput.admin'
+            examples:
+              uploadImageInput:
+                $ref: '#/components/examples/uploadImageInput.admin'
+          application/json/repositoryId:
+            schema:
+              $ref: '#/components/schemas/uploadImageInput.repositoryId'
+            examples:
+              uploadImageInput.repositoryId:
+                $ref: '#/components/examples/uploadImageInput.repositoryId'
+          application/json/tagId:
+            schema:
+              $ref: '#/components/schemas/uploadImageInput.tagId'
+            examples:
+              uploadImageInput.tagId:
+                $ref: '#/components/examples/uploadImageInput.tagId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/uploadImageOutput'
+              examples:
+                uploadImageOutput:
+                  $ref: '#/components/examples/uploadImageOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/tag/{tag-id}/download':
+    post:
+      summary: 下載 Image
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Image"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/downloadImageInput'
+            examples:
+              downloadImageInput:
+                $ref: '#/components/examples/downloadImageInput'
+      responses:
+        '200':
+          description: "OK"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## snapshot api
+  '/admin/project/{project-id}/server/{server-id}/snapshot':
+    post:
+      summary: 對 Server 建立 snapshot
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Snapshot"
+      parameters:
+        - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/path.serverId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createSnapshotInput.admin'
+            examples:
+              createSnapshotInput:
+                $ref: '#/components/examples/createSnapshotInput.admin'
+          application/json/repositoryId:
+            schema:
+              $ref: '#/components/schemas/createSnapshotInput.repositoryId.admin'
+            examples:
+              createSnapshotInput.repositoryId:
+                $ref: '#/components/examples/createSnapshotInput.repositoryId.admin'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createSnapshotOutput'
+              examples:
+                createSnapshotOutput:
+                  $ref: '#/components/examples/createSnapshotOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## export api
+  '/admin/exports':
+    get:
+      summary: 列出所有的匯出資訊
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Export"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：namespace, project-id, creator, repository-id, tag-id, status
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listExportsOutput.admin'
+              examples:
+                listExportsOutput:
+                  $ref: '#/components/examples/listExportsOutput.admin'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/export/{export-id}':
+    get:
+      summary: 取得指定的匯出資訊
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Export"
+      parameters:
+        - $ref: '#/components/parameters/path.exportId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getExportOutput.admin'
+              examples:
+                getExportOutput:
+                  $ref: '#/components/examples/getExportOutput.admin'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 刪除指定的匯出紀錄
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Export"
+      parameters:
+        - $ref: '#/components/parameters/path.exportId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## repository api
+  '/admin/repositories':
+    get:
+      summary: 列出所有的 repositories
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/query.namespace'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：os, creator, project-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listRepositoriesOutput'
+              examples:
+                listModelsOutput:
+                  $ref: '#/components/examples/listRepositoriesOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/repository':
+    post:
+      summary: 創建 repository
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Repository"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createRepositoryInput.admin'
+            examples:
+              createRepositoryInput:
+                $ref: '#/components/examples/createRepositoryInput.admin'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRepositoryOutput'
+              examples:
+                createRepositoryOutput:
+                  $ref: '#/components/examples/createRepositoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/repository/{repository-id}':
+    get:
+      summary: 取得指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.repositoryId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getRepositoryOutput'
+              examples:
+                getRepositoryOutput:
+                  $ref: '#/components/examples/getRepositoryOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.repositoryId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateRepositoryInput'
+            examples:
+              updateRepositoryInput:
+                $ref: '#/components/examples/updateRepositoryInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateRepositoryOutput'
+              examples:
+                updateModelOutput:
+                  $ref: '#/components/examples/updateRepositoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 棄用指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.repositoryId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/repository/{repository-id}/protect':
+    post:
+      summary: 設定保護指定的 repository (避免被刪除)
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.repositoryId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateRepositoryOutput'
+              examples:
+                updateModelOutput:
+                  $ref: '#/components/examples/updateRepositoryOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 解除保護指定的 repository
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/path.repositoryId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateRepositoryOutput'
+              examples:
+                updateModelOutput:
+                  $ref: '#/components/examples/updateRepositoryOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## tag api
+  '/admin/tags':
+    get:
+      summary: 取得所有 tags
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/query.namespace'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：status, type, repository-id, project-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTagsOutput'
+              examples:
+                listTagsOutput:
+                  $ref: '#/components/examples/listTagsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/tag':
+    post:
+      summary: 創建 tag
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/Tag"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createTagInput.admin'
+            examples:
+              createTagInput:
+                $ref: '#/components/examples/createTagInput.admin'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createTagOutput'
+              examples:
+                createTagOutput:
+                  $ref: '#/components/examples/createTagOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/tag/{tag-id}':
+    get:
+      summary: 取得指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getTagOutput'
+              examples:
+                getTagOutput:
+                  $ref: '#/components/examples/getTagOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: 更新指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateTagInput'
+            examples:
+              updateTagInput:
+                $ref: '#/components/examples/updateTagInput'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateTagOutput'
+              examples:
+                updateTagOutput:
+                  $ref: '#/components/examples/updateTagOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 棄用指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/tag/{tag-id}/protect':
+    post:
+      summary: 設定保護指定的 tag (避免被刪除)
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateTagOutput'
+              examples:
+                updateTagOutput:
+                  $ref: '#/components/examples/updateTagOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 解除保護指定的 tag
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateTagOutput'
+              examples:
+                updateTagOutput:
+                  $ref: '#/components/examples/updateTagOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## member-acl api
+  '/admin/tag/{tag-id}/memberacls':
+    get:
+      summary: 取得此 tag 的所有 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/query.namespace'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：tag-id, user-id
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listMemberAclsOutput'
+              examples:
+                listMemberAclsOutput:
+                  $ref: '#/components/examples/listMemberAclsOutput'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/tag/{tag-id}/memberacl':
+    post:
+      summary: 在 repository 創建 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createMemberAclInput.batch'
+            examples:
+              createMemberAclInput:
+                $ref: '#/components/examples/createMemberAclInput.batch'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createMemberAclOutput'
+              examples:
+                createMemberAclOutput:
+                  $ref: '#/components/examples/createMemberAclOutput.batch'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/memberacl/{member-acl-id}':
+    delete:
+      summary: 刪除指定的 member-acl
+      security:
+        - bearerAuth: []
+      tags:
+      - "Admin/MemberAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.memberAclId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+## project-acl api
+  '/admin/tag/{tag-id}/share':
+    post:
+      summary: 在指定的 tag 創建 project-acl 分享給其他成員使用
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ProjectAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createProjectAclOutput'
+              examples:
+                createProjectAclOutput:
+                  $ref: '#/components/examples/createProjectAclOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: 指定的 tag 停止分享給其他成員使用
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ProjectAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.tagId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+  '/admin/projectacls':
+    get:
+      summary: 取得的所有 project-acl
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ProjectAcl"
+      parameters:
+        - $ref: '#/components/parameters/query.limit'
+        - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/query.namespace'
+        - in: query
+          name: where
+          schema:
+            type: array
+            items:
+              type: string
+          description: |
+            此功能可以帶入欄位及值作為查詢條件，來篩選出滿足條件的清單。支援的欄位：tag-id, project-id
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listProjectAclsOutput'
+              examples:
+                listProjectAclsOutput:
+                  $ref: '#/components/examples/listProjectAclsOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/projectacl':
+    post:
+      summary: 在指定的 tag 創建 project-acl 分享給所有人
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ProjectAcl"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createProjectAclInput'
+            examples:
+              createProjectAclInput:
+                $ref: '#/components/examples/createProjectAclInput'
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createProjectAclOutput'
+              examples:
+                createProjectAclOutput:
+                  $ref: '#/components/examples/createProjectAclOutput'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/admin/projectacl/{project-acl-id}':
+    delete:
+      summary: 指定的 tag 停止分享給其他成員使用
+      security:
+        - bearerAuth: []
+      tags:
+        - "Admin/ProjectAcl"
+      parameters:
+        - $ref: '#/components/parameters/path.projectAclId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+components:
+  ##
+  #
+  # securitySchemes
+  #
+  ##
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  ##
+  #
+  # Parameter
+  #
+  ##
+  parameters:
+      path.projectId:
+        in: path
+        name: project-id
+        schema:
+          type: string
+        required: true
+      path.repositoryId:
+        in: path
+        name: repository-id
+        schema:
+          type: string
+        required: true
+        description: "Repository ID"
+      path.tagId:
+        in: path
+        name: tag-id
+        schema:
+          type: string
+        required: true
+        description: "Tag ID"
+      path.memberAclId:
+        in: path
+        name: member-acl-id
+        schema:
+          type: string
+        required: true
+        description: "Member-Acl ID"
+      path.projectAclId:
+        in: path
+        name: project-acl-id
+        schema:
+          type: string
+        required: true
+        description: "Project-Acl ID"
+      path.exportId:
+        in: path
+        name: export-id
+        schema:
+          type: string
+        required: true
+        description: "Export ID"
+      path.serverId:
+        in: path
+        name: server-id
+        schema:
+          type: string
+        required: true
+      query.limit:
+        in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: -1
+          default: 100
+        required: false
+        description: "-1表示全部顯示"
+      query.offset:
+        in: query
+        name: offset
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+        required: false
+        description: "從第幾筆開始取得"
+      query.namespace:
+        in: query
+        name: namespace
+        schema:
+          type: string
+        required: false
+        description: "取得公/私區資訊"
+
+  ##
+  #
+  # Responses
+  #
+  ##
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not Found
+    '500':
+      description: Internal Server Error
+
+  ##
+  #
+  # Examples
+  #
+  ##
+  examples:
+  ## project examples
+    getProjectInfoOutput:
+      value:
+        usedSize: 0
+        usedCount: 0
+        softLimitSize: -1
+        softLimitCount: -1
+    listProjectsOutput:
+      value:
+        projects:
+          - id: 00000000-0000-0000-0000-000000000002
+            usedSize: 0
+            usedCount: 0
+            softLimitSize: -1
+            softLimitCount: -1
+          - id: 14735dfa-5553-46cc-b4bd-405e711b223f
+            usedSize: 4456259594
+            usedCount: 5
+            softLimitSize: -1
+            softLimitCount: -1
+        total: 2
+    updateProjectInput:
+      value:
+        softLimitCount: 100
+        softLimitSize: 10737418240
+    updateProjectOutput:
+      value:
+        id: 14735dfa-5553-46cc-b4bd-405e711b223f
+        softLimitCount: 100
+        softLimitSize: 10737418240
+
+  ## repository examples
+    listRepositoriesOutput:
+      value:
+        repositories:
+          - id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+            name: test
+            namespace: public
+            operatingSystem: linux
+            description:
+            tags: []
+            count: 0
+            creator:
+              id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+              name: system
+              account: system
+            project:
+              id: 14735dfa-5553-46cc-b4bd-405e711b223f
+              displayName: admin
+            createdAt: '2024-08-19T08:32:15Z'
+            updatedAt: '2024-08-19T08:32:15Z'
+        total: 1
+
+    createRepositoryInput:
+      value:
+        name: test
+        operatingSystem: linux
+    createRepositoryInput.admin:
+      value:
+        namespace: public
+        projectId: 14735dfa-5553-46cc-b4bd-405e711b223f
+        creator: 4990ccdb-a9b1-49e5-91df-67c921601d81
+        name: test
+        operatingSystem: linux
+
+    createRepositoryOutput:
+      value:
+        id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        name: test
+        namespace: public
+        operatingSystem: linux
+        description:
+        tags: []
+        count: 0
+        creator:
+          id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+          name: system
+          account: system
+        project:
+          id: 14735dfa-5553-46cc-b4bd-405e711b223f
+          displayName: admin
+        createdAt: '2024-08-19T08:32:15Z'
+        updatedAt: '2024-08-19T08:32:15Z'
+
+    getRepositoryOutput:
+      value:
+        id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        name: test
+        namespace: public
+        operatingSystem: linux
+        description:
+        tags: []
+        count: 0
+        creator:
+          id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+          name: system
+          account: system
+        project:
+          id: 14735dfa-5553-46cc-b4bd-405e711b223f
+          displayName: admin
+        createdAt: '2024-08-19T08:32:15Z'
+        updatedAt: '2024-08-19T08:32:15Z'
+
+    updateRepositoryInput:
+      value:
+        description: update
+
+    updateRepositoryOutput:
+      value:
+        id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        name: test
+        namespace: public
+        operatingSystem: linux
+        description:
+        count: 0
+        creator:
+          id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+          name: system
+          account: system
+        project:
+          id: 14735dfa-5553-46cc-b4bd-405e711b223f
+          displayName: admin
+        createdAt: '2024-08-19T08:32:15Z'
+        updatedAt: '2024-08-19T08:32:15Z'
+
+  ## tag examples
+    listTagsOutput:
+      value:
+        tags:
+        - id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+          name: v1
+          repositoryID: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          type: common
+          size: 0
+          status: ''
+          extra: {}
+          createdAt: '2024-08-19T08:32:25Z'
+          updatedAt: '2024-08-19T08:32:25Z'
+          repository:
+            id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+            name: test
+            namespace: public
+            operatingSystem: linux
+            creator:
+              id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+              name: system
+              account: system
+            project:
+              id: 14735dfa-5553-46cc-b4bd-405e711b223f
+              displayName: admin
+        total: 1
+
+    createTagInput:
+      value:
+        name: v1
+        type: common
+        diskFormat: raw
+        containerFormat: bare
+    createTagInput.admin:
+      value:
+        repositoryID: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        name: v1
+        type: common
+        diskFormat: raw
+        containerFormat: bare
+
+    createTagOutput:
+      value:
+        id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+        name: v1
+        repositoryID: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        type: common
+        size: 0
+        status: ''
+        extra: {}
+        createdAt: '2024-08-19T08:32:25Z'
+        updatedAt: '2024-08-19T08:32:25Z'
+        repository:
+          id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          name: test
+          namespace: public
+          operatingSystem: linux
+          creator:
+            id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+            name: system
+            account: system
+          project:
+            id: 14735dfa-5553-46cc-b4bd-405e711b223f
+            displayName: admin
+
+    getTagOutput:
+      value:
+        id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+        name: v1
+        repositoryID: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        type: common
+        size: 0
+        status: ''
+        extra: {}
+        createdAt: '2024-08-19T08:32:25Z'
+        updatedAt: '2024-08-19T08:32:25Z'
+        repository:
+          id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          name: test
+          namespace: public
+          operatingSystem: linux
+          creator:
+            id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+            name: system
+            account: system
+          project:
+            id: 14735dfa-5553-46cc-b4bd-405e711b223f
+            displayName: admin
+
+    updateTagInput:
+      value:
+        name: v1test
+
+    updateTagOutput:
+      value:
+        id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+        name: v1test
+        repositoryID: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        type: common
+        size: 0
+        status: ''
+        extra: {}
+        createdAt: '2024-08-19T08:32:25Z'
+        updatedAt: '2024-08-19T08:32:25Z'
+        repository:
+          id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          name: test
+          namespace: public
+          operatingSystem: linux
+          creator:
+            id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+            name: system
+            account: system
+          project:
+            id: 14735dfa-5553-46cc-b4bd-405e711b223f
+            displayName: admin
+  ## image examples
+    importImageInput:
+      value:
+        imageId: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+        creator: 4990ccdb-a9b1-49e5-91df-67c921601d81
+        name: ubuntu
+        version: 24.04
+        operatingSystem: linux
+        projectId: 14735dfa-5553-46cc-b4bd-405e711b223f
+        namespace: public
+    importImageInput.repositoryId:
+      value:
+        imageId: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+        repositoryId: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        version: 24.04
+        namespace: public
+    importImageOutput:
+      value:
+        repository:
+          id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          name: ubuntu
+          namespace: public
+          operatingSystem: linux
+        tag:
+          id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+          name: 24.04
+          type: common
+    uploadImageInput:
+      value:
+        name: test
+        operatingSystem: linux
+        description: ""
+        version: v1
+        type: common
+        diskFormat: raw
+        containerFormat: bare
+        filepath: "<source>://<bucket-name>/<image-path>"
+    uploadImageInput.repositoryId:
+      value:
+        repositoryId: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        version: v1
+        type: common
+        diskFormat: raw
+        containerFormat: bare
+        filepath: "<source>://<bucket-name>/<image-path>"
+    uploadImageInput.tagId:
+      value:
+        tagId: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+        filepath: "<source>://<bucket-name>/<image-path>"
+    uploadImageInput.admin:
+      value:
+        name: test
+        operatingSystem: linux
+        description: ""
+        version: v1
+        type: common
+        diskFormat: raw
+        containerFormat: bare
+        filepath: "<source>://<bucket-name>/<image-path>"
+        creator: 4990ccdb-a9b1-49e5-91df-67c921601d81
+        projectId: 14735dfa-5553-46cc-b4bd-405e711b223f
+    uploadImageOutput:
+      value:
+        repository:
+          id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          name: test
+          namespace: public
+          operatingSystem: linux
+        tag:
+          id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+          name: v1
+          type: common
+    downloadImageInput:
+      value:
+        filepath: "<source>://<bucket-name>/<image-path>"
+
+  ## snapshot examples
+    createSnapshotInput:
+      value:
+        version: v1
+        name: test
+        operatingSystem: linux
+        description: ""
+    createSnapshotInput.admin:
+      value:
+        version: v1
+        name: test
+        operatingSystem: linux
+        description: ""
+        creator: 4990ccdb-a9b1-49e5-91df-67c921601d81
+    createSnapshotInput.repositoryId:
+      value:
+        version: v1
+        repositoryId: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+    createSnapshotInput.repositoryId.admin:
+      value:
+        version: v1
+        repositoryId: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+        creator: 4990ccdb-a9b1-49e5-91df-67c921601d81
+    createSnapshotOutput:
+      value:
+        repository:
+          id: 59e0e12a-c857-44a4-88b2-2aa8baec4e00
+          name: test
+          namespace: public
+          operatingSystem: linux
+        tag:
+          id: 800c66b5-d03d-407f-9a1a-e27ecc5b03a0
+          name: v1
+          type: increase
+
+  ## export examples
+    listExportsOutput:
+      value:
+        exports:
+          - id: 047bd286-9eae-4203-91cf-692b00a6cbc6
+            repositoryId: 04ab8b9a-1acb-4158-a931-fc6a1672a6bd
+            repositoryName: test
+            tagId: 383e20b1-5208-4eb7-ba9a-7a7a809d2966
+            tagName: dd
+            type: snapshot
+            filepath: dss-public://test/output1
+            status: finished
+            creator: ac94ca3c-2376-43df-a5e2-2e2c39595630
+            projectId: 99999999-9999-9999-9999-999999999999
+            createdAt: '2024-11-15T07:56:50Z'
+            updatedAt: '2024-11-15T08:02:01Z'
+        total: 1
+    listExportsOutput.admin:
+      value:
+        exports:
+          - id: 047bd286-9eae-4203-91cf-692b00a6cbc6
+            repositoryId: 04ab8b9a-1acb-4158-a931-fc6a1672a6bd
+            repositoryName: test
+            tagId: 383e20b1-5208-4eb7-ba9a-7a7a809d2966
+            tagName: dd
+            type: snapshot
+            snapshotId: 0d69a820-250d-4ae1-92de-30d60144cdc6
+            snapshotStatus: available
+            volumeId: 07fa9fc3-6fb8-4ba4-8946-cbb4f244ffc8
+            volumeStatus: available
+            imageId: 74682688-647b-44ff-8171-426e334072aa
+            imageStatus: active
+            filepath: dss-public://test/output1
+            status: finished
+            creator: ac94ca3c-2376-43df-a5e2-2e2c39595630
+            projectId: 99999999-9999-9999-9999-999999999999
+            namespace: public
+            createdAt: '2024-11-15T07:56:50Z'
+            updatedAt: '2024-11-15T08:02:01Z'
+        total: 1
+    getExportOutput:
+      value:
+        id: 047bd286-9eae-4203-91cf-692b00a6cbc6
+        repositoryId: 04ab8b9a-1acb-4158-a931-fc6a1672a6bd
+        repositoryName: test
+        tagId: 383e20b1-5208-4eb7-ba9a-7a7a809d2966
+        tagName: dd
+        type: snapshot
+        filepath: dss-public://test/output1
+        status: finished
+        creator: ac94ca3c-2376-43df-a5e2-2e2c39595630
+        projectId: 99999999-9999-9999-9999-999999999999
+        createdAt: '2024-11-15T07:56:50Z'
+        updatedAt: '2024-11-15T08:02:01Z'
+    getExportOutput.admin:
+      value:
+        id: 047bd286-9eae-4203-91cf-692b00a6cbc6
+        repositoryId: 04ab8b9a-1acb-4158-a931-fc6a1672a6bd
+        repositoryName: test
+        tagId: 383e20b1-5208-4eb7-ba9a-7a7a809d2966
+        tagName: dd
+        type: snapshot
+        snapshotId: 0d69a820-250d-4ae1-92de-30d60144cdc6
+        snapshotStatus: available
+        volumeId: 07fa9fc3-6fb8-4ba4-8946-cbb4f244ffc8
+        volumeStatus: available
+        imageId: 74682688-647b-44ff-8171-426e334072aa
+        imageStatus: active
+        filepath: dss-public://test/output1
+        status: finished
+        creator: ac94ca3c-2376-43df-a5e2-2e2c39595630
+        projectId: 99999999-9999-9999-9999-999999999999
+        namespace: public
+        createdAt: '2024-11-15T07:56:50Z'
+        updatedAt: '2024-11-15T08:02:01Z'
+
+  ## member-acl examples
+    listMemberAclsOutput:
+      value:
+        memberacls:
+        - id: 2ca65397-22d5-477a-a527-3c31cd76f999
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          user:
+            id: 61816fea-1796-4171-a707-a0993da80569
+            displayName: test1
+            account: test1
+        - id: 0da8ee79-eb58-4c08-b325-40dfec14d053
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          user:
+            id: 2ca65397-22d5-477a-a527-3c31cd76f999
+            displayName: test2
+            account: test2
+        - id: d011cfcb-fada-4a21-8274-0201401783e8
+          tag:
+            id: 99e4010e-73bc-4164-b11c-3047676b349e
+            name: v2
+            type: common
+          user:
+            id: 61816fea-1796-4171-a707-a0993da80569
+            displayName: test1
+            account: test1
+        - id: c37adc91-a49f-403f-b6fa-b87694fe9d27
+          tag:
+            id: 99e4010e-73bc-4164-b11c-3047676b349e
+            name: v2
+            type: common
+          user:
+            id: 2ca65397-22d5-477a-a527-3c31cd76f999
+            displayName: test2
+            account: test2
+        total: 4
+    createMemberAclInput.batch:
+      value:
+        tagId:
+        - 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        - 99e4010e-73bc-4164-b11c-3047676b349e
+        userId:
+        - 61816fea-1796-4171-a707-a0993da80569
+        - 2ca65397-22d5-477a-a527-3c31cd76f999
+    createMemberAclOutput.batch:
+      value:
+        memberacls:
+        - id: 2ca65397-22d5-477a-a527-3c31cd76f999
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          user:
+            id: 61816fea-1796-4171-a707-a0993da80569
+            displayName: test1
+            account: test1
+        - id: 0da8ee79-eb58-4c08-b325-40dfec14d053
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          user:
+            id: 2ca65397-22d5-477a-a527-3c31cd76f999
+            displayName: test2
+            account: test2
+        - id: d011cfcb-fada-4a21-8274-0201401783e8
+          tag:
+            id: 99e4010e-73bc-4164-b11c-3047676b349e
+            name: v2
+            type: common
+          user:
+            id: 61816fea-1796-4171-a707-a0993da80569
+            displayName: test1
+            account: test1
+        - id: c37adc91-a49f-403f-b6fa-b87694fe9d27
+          tag:
+            id: 99e4010e-73bc-4164-b11c-3047676b349e
+            name: v2
+            type: common
+          user:
+            id: 2ca65397-22d5-477a-a527-3c31cd76f999
+            displayName: test2
+            account: test2
+        total: 4
+    createMemberAclInput:
+      value:
+        userId:
+        - 61816fea-1796-4171-a707-a0993da80569
+        - 2ca65397-22d5-477a-a527-3c31cd76f999
+    createMemberAclOutput:
+      value:
+        memberacls:
+        - id: 2ca65397-22d5-477a-a527-3c31cd76f999
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          user:
+            id: 61816fea-1796-4171-a707-a0993da80569
+            displayName: test1
+            account: test1
+        - id: 0da8ee79-eb58-4c08-b325-40dfec14d053
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          user:
+            id: 2ca65397-22d5-477a-a527-3c31cd76f999
+            displayName: test2
+            account: test2
+        total: 2
+
+  ## project-acl examples
+    listProjectAclsOutput:
+      value:
+        projectacls:
+        - id: 2ca65397-22d5-477a-a527-3c31cd76f999
+          tag:
+            id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            name: v1
+            type: common
+          project:
+            id: 14735dfa-5553-46cc-b4bd-405e711b223f
+            displayName: admin
+    createProjectAclInput:
+      value:
+        tagId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        projectId: 14735dfa-5553-46cc-b4bd-405e711b223f
+    createProjectAclOutput:
+      value:
+        id: 2ca65397-22d5-477a-a527-3c31cd76f999
+        tag:
+          id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          name: v1
+          type: common
+        project:
+          id: 14735dfa-5553-46cc-b4bd-405e711b223f
+          displayName: admin
+
+##
+#
+# Schema
+##
+  schemas:
+    user.info:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        account:
+          type: string
+    project.info:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+    repository.info:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        namespace:
+          type: string
+        operatingSystem:
+          type: string
+        creator:
+          $ref: '#/components/schemas/user.info'
+        project:
+          $ref: '#/components/schemas/project.info'
+    tag.info:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+    diskFormat:
+      type: string
+      enum:
+      - ami
+      - ari
+      - aki
+      - vhd
+      - vmdk
+      - raw
+      - qcow2
+      - vdi
+      - iso
+    containerFormat:
+      type: string
+      enum:
+      - ami
+      - ari
+      - aki
+      - bare
+      - ovf
+
+  ## project schema
+    getProjectInfoOutput:
+      type: object
+      properties:
+        usedSize:
+          type: integer
+        usedCount:
+          type: integer
+        softLimitSize:
+          type: integer
+          description: "unlimit if equal to -1"
+        softLimitCount:
+          type: integer
+          description: "unlimit if equal to -1"
+    listProjectsOutput:
+      type: object
+      properties:
+        projects:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            usedSize:
+              type: integer
+            usedCount:
+              type: integer
+            softLimitSize:
+              type: integer
+              description: "unlimit if equal to -1"
+            softLimitCount:
+              type: integer
+              description: "unlimit if equal to -1"
+        total:
+          type: integer
+    updateProjectInput:
+      type: object
+      properties:
+        softLimitSize:
+          type: integer
+          description: "unlimit if equal to -1"
+        softLimitCount:
+          type: integer
+          description: "unlimit if equal to -1"
+    updateProjectOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        softLimitSize:
+          type: integer
+          description: "unlimit if equal to -1"
+        softLimitCount:
+          type: integer
+          description: "unlimit if equal to -1"
+
+  ## repository schema
+    repository:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        namespace:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/tag.info'
+        count:
+          type: integer
+        creator:
+          $ref: '#/components/schemas/user.info'
+        project:
+          $ref: '#/components/schemas/project.info'
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+    listRepositoriesOutput:
+      type: object
+      properties:
+        repositories:
+          type: array
+          items:
+            $ref: '#/components/schemas/repository'
+        total:
+          type: integer
+    createRepositoryInput:
+      type: object
+      required:
+      - name
+      - operatingSystem
+      properties:
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+    createRepositoryInput.admin:
+      type: object
+      required:
+      - namespace
+      - projectId
+      - creator
+      - name
+      - operatingSystem
+      properties:
+        namespace:
+          type: string
+        projectId:
+          type: string
+        creator:
+          type: string
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+    createRepositoryOutput:
+      $ref: '#/components/schemas/repository'
+    getRepositoryOutput:
+      $ref: '#/components/schemas/repository'
+    updateRepositoryInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    updateRepositoryOutput:
+      $ref: '#/components/schemas/repository'
+
+  ## tag schema
+    tag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+        size:
+          type: integer
+        status:
+          type: string
+        extra:
+          type: object
+        repository:
+          $ref: '#/components/schemas/repository.info'
+        createdAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+        updatedAt:
+          type: string
+          format: date-time
+          description: UTC Time (RFC3339)
+    listTagsOutput:
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/tag'
+        total:
+          type: integer
+    createTagInput:
+      type: object
+      required:
+      - name
+      - type
+      - diskFormat
+      - containerFormat
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        diskFormat:
+          $ref: '#/components/schemas/diskFormat'
+        containerFormat:
+          $ref: '#/components/schemas/containerFormat'
+        extra:
+          type: object
+    createTagInput.admin:
+      type: object
+      required:
+      - repositoryId
+      - name
+      - type
+      - diskFormat
+      - containerFormat
+      properties:
+        repositoryId:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        diskFormat:
+          $ref: '#/components/schemas/diskFormat'
+        containerFormat:
+          $ref: '#/components/schemas/containerFormat'
+        extra:
+          type: object
+    createTagOutput:
+      $ref: '#/components/schemas/tag'
+    getTagOutput:
+      $ref: '#/components/schemas/tag'
+    updateTagInput:
+      type: object
+      properties:
+        name:
+          type: string
+    updateTagOutput:
+      $ref: '#/components/schemas/tag'
+
+  ## image schema
+    importImageInput:
+      type: object
+      required:
+      - imageId
+      - creator
+      - name
+      - operatingSystem
+      - projectId
+      - namespace
+      properties:
+        imageId:
+          type: string
+        version:
+          type: string
+        creator:
+          type: string
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+        projectId:
+          type: string
+        namespace:
+          type: string
+    importImageInput.repositoryId:
+      type: object
+      required:
+      - imageId
+      - repositoryId
+      - namespace
+      properties:
+        imageId:
+          type: string
+        version:
+          type: string
+        repositoryId:
+          type: string
+        namespace:
+          type: string
+    importImageOutput:
+      type: object
+      properties:
+        repository:
+          $ref: '#/components/schemas/repository.info'
+        tag:
+          $ref: '#/components/schemas/tag.info'
+
+    uploadImageInput.tagId:
+      type: object
+      required:
+      - tagId
+      - filepath
+      properties:
+        tagId:
+          type: string
+        filepath:
+          type: string
+    uploadImageInput.repositoryId:
+      type: object
+      required:
+      - repositoryId
+      - version
+      - type
+      - diskFormat
+      - containerFormat
+      - filepath
+      properties:
+        repositoryId:
+          type: string
+        version:
+          type: string
+        type:
+          type: string
+        diskFormat:
+          $ref: '#/components/schemas/diskFormat'
+        containerFormat:
+          $ref: '#/components/schemas/containerFormat'
+        extra:
+          type: object
+        filepath:
+          type: string
+    uploadImageInput:
+      type: object
+      required:
+      - name
+      - operatingSystem
+      - version
+      - type
+      - diskFormat
+      - containerFormat
+      - filepath
+      properties:
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        type:
+          type: string
+        diskFormat:
+          $ref: '#/components/schemas/diskFormat'
+        containerFormat:
+          $ref: '#/components/schemas/containerFormat'
+        extra:
+          type: object
+        filepath:
+          type: string
+    uploadImageInput.admin:
+      type: object
+      required:
+      - name
+      - operatingSystem
+      - version
+      - type
+      - diskFormat
+      - containerFormat
+      - filepath
+      - creator
+      - projectId
+      properties:
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        type:
+          type: string
+        diskFormat:
+          $ref: '#/components/schemas/diskFormat'
+        containerFormat:
+          $ref: '#/components/schemas/containerFormat'
+        extra:
+          type: object
+        filepath:
+          type: string
+        creator:
+          type: string
+        projectId:
+          type: string
+    uploadImageOutput:
+      type: object
+      properties:
+        repository:
+          $ref: '#/components/schemas/repository.info'
+        tag:
+          $ref: '#/components/schemas/tag.info'
+    downloadImageInput:
+      type: object
+      required:
+      - filepath
+      properties:
+        filepath:
+          type: string
+
+  ## snapshot schema
+    createSnapshotInput:
+      type: object
+      required:
+      - version
+      - name
+      - operatingSystem
+      properties:
+        version:
+          type: string
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+    createSnapshotInput.admin:
+      type: object
+      required:
+      - version
+      - name
+      - operatingSystem
+      - creator
+      properties:
+        version:
+          type: string
+        name:
+          type: string
+        operatingSystem:
+          type: string
+        description:
+          type: string
+        creator:
+          type: string
+    createSnapshotInput.repositoryId:
+      type: object
+      required:
+      - version
+      - repositoryId
+      properties:
+        version:
+          type: string
+        repositoryId:
+          type: string
+    createSnapshotInput.repositoryId.admin:
+      type: object
+      required:
+      - version
+      - repositoryId
+      - creator
+      properties:
+        version:
+          type: string
+        repositoryId:
+          type: string
+        creator:
+          type: string
+    createSnapshotOutput:
+      type: object
+      properties:
+        repository:
+          $ref: '#/components/schemas/repository.info'
+        tag:
+          $ref: '#/components/schemas/tag.info'
+  ## export schema
+    export:
+      type: object
+      properties:
+        id:
+          type: string
+        repositoryId:
+          type: string
+        repositoryName:
+          type: string
+        tagId:
+          type: string
+        tagName:
+          type: string
+        type:
+          type: string
+        filepath:
+          type: string
+        status:
+          type: string
+        creator:
+          type: string
+        projectId:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    export.admin:
+      type: object
+      properties:
+        id:
+          type: string
+        repositoryId:
+          type: string
+        repositoryName:
+          type: string
+        tagId:
+          type: string
+        tagName:
+          type: string
+        type:
+          type: string
+        snapshotId:
+          type: string
+        snapshotStatus:
+          type: string
+        volumeId:
+          type: string
+        volumeStatus:
+          type: string
+        imageId:
+          type: string
+        imageStatus:
+          type: string
+        filepath:
+          type: string
+        status:
+          type: string
+        creator:
+          type: string
+        projectId:
+          type: string
+        namespace:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    listExportsOutput:
+      type: object
+      properties:
+        exports:
+          type: array
+          items:
+            $ref: '#/components/schemas/export'
+        total:
+          type: integer
+    listExportsOutput.admin:
+      type: object
+      properties:
+        exports:
+          type: array
+          items:
+            $ref: '#/components/schemas/export.admin'
+        total:
+          type: integer
+    getExportOutput:
+      $ref: '#/components/schemas/export'
+    getExportOutput.admin:
+      $ref: '#/components/schemas/export.admin'
+
+
+  ## member-acl schema
+    memberacl:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tagId:
+          $ref: '#/components/schemas/tag.info'
+        userId:
+          $ref: '#/components/schemas/user.info'
+    listMemberAclsOutput:
+      type: object
+      properties:
+        memberacls:
+          type: array
+          items:
+            $ref: '#/components/schemas/memberacl'
+        total:
+          type: integer
+    createMemberAclInput.batch:
+      type: object
+      required:
+      - tagId
+      - userId
+      properties:
+        tagId:
+          type: array
+          items:
+            type: string
+        userId:
+          type: array
+          items:
+            type: string
+    createMemberAclInput:
+      type: object
+      required:
+      - userId
+      properties:
+        userId:
+          type: array
+          items:
+            type: string
+    createMemberAclOutput:
+      type: object
+      properties:
+        memberacls:
+          type: array
+          items:
+            $ref: '#/components/schemas/memberacl'
+        total:
+          type: integer
+
+  ## project-acl schema
+    projectacl:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tag:
+          $ref: '#/components/schemas/tag.info'
+        project:
+          $ref: '#/components/schemas/project.info'
+    listProjectAclsOutput:
+      type: object
+      properties:
+        projectacls:
+          type: array
+          items:
+            $ref: '#/components/schemas/projectacl'
+        total:
+          type: integer
+    createProjectAclInput:
+      type: object
+      required:
+      - tagId
+      properties:
+        tagId:
+          type: string
+        projectId:
+          type: string
+    createProjectAclOutput:
+      $ref: '#/components/schemas/projectacl'
