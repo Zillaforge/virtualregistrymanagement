@@ -1,6 +1,6 @@
 %define RPM_BUILD_ROOT _topdir
 %define Name VirtualRegistryManagement
-%define Version 0.0.5
+%define Version 0.0.6
 %define Release 1
 %define BuildRoot %{_topdir}/BUILDROOT/%{Name}-%{Version}-%{Release}.x86_64
 %define Group pegasus

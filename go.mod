@@ -24,12 +24,12 @@ require (
 	gorm.io/datatypes v1.2.1
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.10
-	pegasus-cloud.com/aes/eventpublishpluginclient v0.2.2
-	pegasus-cloud.com/aes/meteringtoolkits v0.0.2
-	pegasus-cloud.com/aes/pegasusiamclient v1.8.2
-	pegasus-cloud.com/aes/toolkits v0.4.3
-	pegasus-cloud.com/aes/virtualplatformserviceclient v1.0.0
-	pegasus-cloud.com/aes/virtualregistrymanagementclient v0.0.4
+	pegasus-cloud.com/aes/eventpublishpluginclient v0.2.3
+	pegasus-cloud.com/aes/meteringtoolkits v0.0.3
+	pegasus-cloud.com/aes/pegasusiamclient v1.8.3
+	pegasus-cloud.com/aes/toolkits v0.4.5
+	pegasus-cloud.com/aes/virtualplatformserviceclient v1.0.2
+	pegasus-cloud.com/aes/virtualregistrymanagementclient v0.0.5
 )
 
 require (
