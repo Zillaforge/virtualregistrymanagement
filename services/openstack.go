@@ -2,8 +2,10 @@ package services
 
 import (
 	opstkExec "VirtualRegistryManagement/modules/openstack/execution"
+	"fmt"
 
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 )
 
 func InitOpenstack(svcCfg *viper.Viper) (err error) {
@@ -17,6 +19,7 @@ func InitOpenstack(svcCfg *viper.Viper) (err error) {
 		PidSource:        svcCfg.GetString("pid_source"),
 	})
 	if err != nil {
+		zap.L().Error(fmt.Sprintf("failed to initialize openstack service [%s]", svcCfg.GetString("name")))
 		return err
 	}
 	ServiceMap[svcCfg.GetString("name")] = &Service{

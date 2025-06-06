@@ -1,7 +1,10 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 	"pegasus-cloud.com/aes/pegasusiamclient/iam"
 	iamUtil "pegasus-cloud.com/aes/pegasusiamclient/utility"
 )
@@ -22,6 +25,7 @@ func InitIAM(svcCfg *viper.Viper) (err error) {
 		RouteResponseType: iamUtil.JSON,
 	})
 	if err != nil {
+		zap.L().Error(fmt.Sprintf("failed to initialize iam service [%s]", svcCfg.GetString("name")))
 		return err
 	}
 	ServiceMap[svcCfg.GetString("name")] = &Service{
