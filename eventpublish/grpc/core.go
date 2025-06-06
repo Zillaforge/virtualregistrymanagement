@@ -37,15 +37,18 @@ func StartPlugin(input *StartPluginInput) (c *core, err error) {
 	}
 	binaryExist, configExist := true, true
 	if _, err := os.Stat(input.BinaryPath); errors.Is(err, os.ErrNotExist) {
+		zap.L().Debug(fmt.Sprintf("Binary file not found: '%s'", input.BinaryPath))
 		binaryExist = false
 	}
 	if _, err := os.Stat(input.ConfigPath); errors.Is(err, os.ErrNotExist) {
+		zap.L().Debug(fmt.Sprintf("Config file not found: '%s'", input.ConfigPath))
 		configExist = false
 	}
 	os.Remove(input.SocketPath)
 	// 需要同時滿足 binary file, config file 皆存在且 sock file 不存在的條件下
 	// 系統才會自動以子程序方式啟動 plugin process。
 	if binaryExist && configExist {
+		zap.L().Info(fmt.Sprintf("Plugin %s is starting ...", input.Name))
 		cmd := exec.Command(input.BinaryPath, cmdArgs(input.ConfigPath, input.StartCmdArgs, "serve")...)
 		if err := cmd.Start(); err != nil {
 			zap.L().Error(err.Error())
