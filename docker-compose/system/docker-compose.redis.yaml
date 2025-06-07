@@ -1,4 +1,3 @@
-version: "2"
 services:
   pegasus-cloud-redis:
     image: docker.io/bitnami/redis:6.2.7
@@ -10,6 +9,7 @@ services:
     networks:
       pegasus-cloud-network:
         ipv4_address: 172.40.202.0
+
   pegasus-cloud-redis-sentinel:
     image: docker.io/bitnami/redis-sentinel:6.2.7
     container_name: redis-sentinel
@@ -21,6 +21,18 @@ services:
     networks:
       pegasus-cloud-network:
         ipv4_address: 172.40.202.1
+
+  redisinsight:
+    profiles:
+      - ${REDISINSIGHT_DISABLE:-}
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.202.2
+
 networks:
   pegasus-cloud-network:
     external: true

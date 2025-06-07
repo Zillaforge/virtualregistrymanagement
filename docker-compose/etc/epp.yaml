@@ -1,0 +1,43 @@
+plugin:
+  name: EventPublishPlugin
+  instance: EventPublishPlugin
+  version: 0.1.2
+  socket_path: "/eventpublishplugin.sock"
+  logger:
+    system_log:
+      path: log/
+      max_size: 10
+      max_backups: 5
+      max_age: 10
+      compress: false
+      mode: debug
+      show_in_console: true
+    event_log:
+      path: log/
+      max_size: 10
+      max_backups: 5
+      max_age: 10
+  tracer:
+    enable: false
+    collector_endpoint: http://pegasus-cloud-jaeger:14268/api/traces
+    timeout: 10
+  service: my_redis_sentinel
+  services:
+  - name: my_redis_sentinel
+    kind: redis_sentinel
+    hosts:
+    - pegasus-cloud-redis-sentinel:26379
+    password: password
+    sentinel_password: password
+    master_group_name: mymaster
+  # - name: my_rabbitmq
+  #   kind: rabbitmq
+  #   account: guest
+  #   password: guest
+  #   host: pegasus-cloud-rabbitmq:5672
+  #   manage_host: pegasus-cloud-rabbitmq:15672
+  #   timeout: 5
+  #   rpc_timeout: 10
+  #   connection_num: 4
+  #   channel_num: 2
+  #   consumer_conn: 3

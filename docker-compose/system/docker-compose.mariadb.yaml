@@ -1,4 +1,3 @@
-version: "2"
 services:
   pegasus-cloud-mariadb:
     image: mariadb:10.5.8
@@ -10,10 +9,12 @@ services:
         ipv4_address: 172.40.200.0
     volumes:
       - pegasus-cloud-mariadb-data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    # ports:
+      # - "3306:3306"
   pegasus-cloud-phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    profiles:
+      - ${PHPMYADMIN_DISABLE:-}
     container_name: mariadb-phpmyadmin
     environment:
       - PMA_HOST=mariadb

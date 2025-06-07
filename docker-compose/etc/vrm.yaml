@@ -1,0 +1,145 @@
+version: 0.0.6
+kind: VirtualRegistryManagement
+VirtualRegistryManagement:
+  instance: VirtualRegistryManagement
+  developer: false
+  # http:
+    # host: 0.0.0.0:8106
+    # access_control:
+      # allow_origins: ["*"]
+      # allow_credentials: true
+      # allow_headers: ["Origin", "Content-Length", "Content-Type", "Authorization"]
+      # allow_methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+      # expose_headers: ["host-id", "version-id", "location-id"]
+  grpc:
+    host: 0.0.0.0:5106
+    unix_socket: 
+      path: /VirtualRegistryManagement.sock
+      conn_count: 20
+    write_buffer_size: 32768
+    read_buffer_size: 32768
+    max_receive_message_size: 4194304
+    max_send_message_size: 2147483647
+  logger:
+    system_log:
+      path: log/
+      # max_size: 10
+      # max_backups: 5
+      # max_age: 10
+      # compress: false
+      mode: debug
+      show_in_console: true
+    access_log:
+      path: log/
+      # max_size: 10
+      # max_backups: 5
+      # max_age: 10
+      # compress: false
+      # default_source_ip: 196.254.1.0
+    event_consume_log:
+      path: log/
+      # max_size: 10
+      # max_backups: 5
+      # max_age: 10
+      # compress: false
+  # tls:
+  #   enable: false
+  #   cert_path: tls/hcs/pegasus-hcs.pem
+  #   key_path: tls/hcs/pegasus-hcs-key.pem
+  tracer:
+    enable: false
+    host: http://pegasus-cloud-jaeger:14268/api/traces
+    timeout: 10
+  filepath:
+  # <scheme>://<path> => <root>/<prefix>/<path>/<suffix>
+  - name: vrm-test
+    scheme: vrm
+    type: local
+    root: tmp/
+    prefix: "%s" # project-id
+  scopes:
+    availability_district: "default"
+    snapshot_size: "size" # trustedcloud: metadata.actual_size
+storage:
+  provider: mariadb
+  mariadb:
+    host: pegasus-cloud-mariadb:3306
+    account: root
+    password: password
+    name: vrm
+    timeout: 5
+    max_open_conns: 150
+    conn_max_lifetime: 10
+    max_idle_conns: 150
+vps:
+  host: pegasus-cloud-vps:5106
+  tls:
+    enable: false
+    cert_path: /root/server-csr/IAM.pem
+  connection_per_host: 3
+authentication:
+  service: myiam
+openstack:
+  - namespace: public
+    service: opstk
+  - namespace: private
+    service: opstk
+event_consume:
+  # service 輸入指定的 Service Name 或 empty(不啟動) 
+  service: my_redis_sentinel
+  channels:
+  - FromIAM
+services:
+  - name: myiam
+    kind: iam
+    hosts: 
+      # - pegasus-cloud-iamserver:5051
+      - pegasus-cloud-iamserver-release:5051
+    tls:
+      enable: false
+      cert_path: /root/server-csr/IAM.pem
+    connection_per_host: 3
+  - name: my_redis_sentinel
+    kind: redis_sentinel
+    hosts:
+    - pegasus-cloud-redis-sentinel:26379
+    password: password
+    sentinel_password: password
+    master_group_name: mymaster
+  - name: opstk
+    kind: openstack
+    identity_endpoint: http://140.110.139.17:5000/v3
+    username: test@trusted-cloud.nchc.org.tw
+    password: password123
+    domain_name: trustedcloud
+    admin_project: 14735dfa-5553-46cc-b4bd-405e711b223f
+    allow_reauth: true
+    pid_source: id # example: id, extra.tw-tc-ad1.opsk.uuid
+metering_service:
+  account: guest
+  password: guest
+  host: pegasus-cloud-rabbitmq:5672
+  manage_host: pegasus-cloud-rabbitmq:15672
+  timeout: 5
+  rpc_timeout: 10
+  vhost: "/"
+  operation_connection_num: 2
+  channel_num: 1
+  replica_num: 0
+  consumer_connection_num: 1
+event_publish:
+  plugins:
+  - name: event_publish
+    type: grpc
+    binary_path: /var/lib/ASUS/EventPublishPlugin/eventpublishplugin
+    config_path: /var/lib/ASUS/EventPublishPlugin/epp.yaml
+    socket_path: /eventpublishplugin.sock
+    start_cmd_args:
+      --redis-channel: FromVRM
+littlebell:
+  host: http://pegasus-cloud-snsserver:8092
+  region: default
+  credential:
+    project_id: 14735dfa-5553-46cc-b4bd-405e711b223f
+    user_id: 4990ccdb-a9b1-49e5-91df-67c921601d81
+  arn: arn:aws:sns:default:14735dfa-5553-46cc-b4bd-405e711b223f:lbm-svc-event-publish-topic

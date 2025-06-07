@@ -1,6 +1,7 @@
-version: "2"
 services:
   pegasus-cloud-jaeger:
+    profiles:
+      - ${JAEGER_DISABLE:-}  
     image: jaegertracing/all-in-one:1.21
     container_name: jaeger
     volumes:

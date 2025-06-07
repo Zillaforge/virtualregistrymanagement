@@ -1,7 +1,8 @@
-version: "2"
 services:
   pegasus-cloud-iamserver:
-    image: ociscloud/golang:1.22.4-${PLATFORM:-ubuntu-amd64}
+    profiles:
+      - ${IAM_DISABLE:-}    
+    image: golang:1.22.4-alpine
     container_name: iam-server
     networks:
       pegasus-cloud-network:
@@ -12,15 +13,43 @@ services:
     volumes:
       - ${PWD}/..:/home
       - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
-    entrypoint: ["tail", "-f", "/dev/null"]
+      - ${PWD}/docker-compose/etc/PegasusIAM.yaml:/mnt/PegasusIAM.yaml
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |-
+        apk add make libc6-compat && \
+        rm -rf tmp/* && \
+        make RELEASE_MODE=prod go-build && \
+        cp tmp/* /PegasusIAM && \
+        /PegasusIAM serve -c /mnt/PegasusIAM.yaml
     ports:
-      - "3891:3891" # ldap
-      - "5051:5051" # grpc
+      # - "3891:3891" # ldap
+      # - "5051:5051" # grpc
       - "8084:8084" # http
+    restart: on-failure
+
+  pegasus-cloud-iamserver-release:
+    profiles:
+      - ${IAM_RELEASE_DISABLE:-}
+    image: ociscloud/iam:1.8.3
+    container_name: iam-server-release
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.100.1
+    volumes:
+      - ${PWD}/docker-compose/etc/iam.yaml:/mnt/iam.yaml
+      - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
+    command: ["/PegasusIAM","serve","-c","/mnt/iam.yaml"]
+    ports:
+      - "8084:8084" # http
+    restart: on-failure
+
 networks:
   pegasus-cloud-network:
     external: true
     name: pegasus-cloud-network
+
 volumes:  
   pegasus-cloud-eventpublishplugin:
     name: pegasus-cloud-eventpublishplugin

@@ -1,0 +1,53 @@
+services:
+  pegasus-cloud-eventpublishplugin:
+    profiles:
+      - ${EPP_DISABLE:-}
+    image: golang:1.22.4-alpine
+    container_name: epp-server
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.110.0
+    working_dir: /home/${EPP_FOLDER_NAME}
+    environment:
+      - GOPROXY=${GOPROXY}
+    volumes:
+      - ${PWD}/..:/home
+      - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |-
+        apk add make libc6-compat && \
+        rm -rf tmp/* && \
+        make RELEASE_MODE=prod go-build && \
+        cp tmp/* /var/lib/ASUS/EventPublishPlugin/eventpublishplugin && \
+        cp /home/${SERVICE_FOLDER_NAME}/docker-compose/etc/epp.yaml /var/lib/ASUS/EventPublishPlugin/
+    restart: on-failure
+
+  pegasus-cloud-eventpublishplugin-release:
+    profiles:
+      - ${EPP_RELEASE_DISABLE:-}
+    image: ociscloud/event-publish-plugin:0.1.2
+    container_name: epp-server-release
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.110.1
+    volumes:
+      - ${PWD}/..:/home
+      - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |-
+        cp /plugin/eventpublishplugin /var/lib/ASUS/EventPublishPlugin/ && \
+        cp /home/${SERVICE_FOLDER_NAME}/docker-compose/etc/epp.yaml /var/lib/ASUS/EventPublishPlugin/
+
+networks:
+  pegasus-cloud-network:
+    external: true
+    name: pegasus-cloud-network
+
+volumes:
+  pegasus-cloud-eventpublishplugin:
+    name: pegasus-cloud-eventpublishplugin
+    external: true

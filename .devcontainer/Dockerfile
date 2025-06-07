@@ -23,9 +23,11 @@ RUN go install github.com/ramya-rao-a/go-outline@latest         && \
     go install honnef.co/go/tools/cmd/staticcheck@v0.4.7        && \
     go install golang.org/x/tools/gopls@v0.15.3
 
+# running glibc binaries on Alpine
+# https://stackoverflow.com/questions/66963068/docker-alpine-executable-binary-not-found-even-if-in-path
 ARG GO_ARCH
 RUN if [ "${GO_ARCH}" == "alpine" ]; then \
-        apk add zsh-vcs make bash; \
+        apk add zsh-vcs make libc6-compat; \
     fi
 
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.2.1/zsh-in-docker.sh)" -- \

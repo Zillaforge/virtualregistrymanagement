@@ -1,7 +1,8 @@
-version: "2"
 services:
   pegasus-cloud-vrm:
-    image: ociscloud/golang:1.22.4-${PLATFORM:-ubuntu-amd64}
+    profiles:
+      - ${VRM_DISABLE:-}    
+    image: golang:1.22.4-alpine
     container_name: vrm-server
     networks:
       pegasus-cloud-network:
@@ -12,15 +13,41 @@ services:
     volumes:
       - ${PWD}/..:/home
       - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
-    entrypoint: ["tail", "-f", "/dev/null"]
+    entrypoint: 
+      - "sh"
+      - "-c"
+      - |-
+        apk add make libc6-compat && \
+        make start
     ports:
       - "5109:5109" # http
       - "8109:8109" # http
-    privileged: true
+    restart: on-failure  
+    # privileged: true
+
+  pegasus-cloud-vrm-release:
+    profiles:
+      - ${VRM_RELEASE_DISABLE:-}
+    image: ociscloud/virtual-registry-management:0.0.6
+    container_name: vrm-server-release
+    networks:
+      pegasus-cloud-network:
+        ipv4_address: 172.40.120.1
+    volumes:
+      - ${PWD}/docker-compose/etc/vrm.yaml:/mnt/vrm.yaml
+      - pegasus-cloud-eventpublishplugin:/var/lib/ASUS/EventPublishPlugin
+    command: ["/VirtualRegistryManagement","serve","-c","/mnt/vrm.yaml"]
+    ports:
+      - "5109:5109" # http
+      - "8109:8109" # http
+    restart: on-failure  
+
+
 networks:
   pegasus-cloud-network:
     external: true
     name: pegasus-cloud-network
+
 volumes:
   pegasus-cloud-eventpublishplugin:
     name: pegasus-cloud-eventpublishplugin

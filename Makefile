@@ -4,7 +4,7 @@ ABBR ?= vrm
 IMAGE_NAME ?= virtual-registry-management
 GOVERSION ?= 1.22.4
 OS ?= ubuntu
-ARCH ?= amd64
+ARCH ?= $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
 PREVERSION ?= 0.0.6
 VERSION ?= $(shell cat VERSION)
 PWD := $(shell pwd)
@@ -107,15 +107,15 @@ start-dev-env:
 	
 .PHONY: start-dev-service
 start-dev-service: docker-compose/service/docker-compose.*.yaml
-	@for f in $^; do COMPOSE_IGNORE_ORPHANS=True docker-compose -f $${f} -p "pegasus-service" up -d --no-recreate; done
+	@for f in $^; do ARCH=$(ARCH) COMPOSE_IGNORE_ORPHANS=True docker-compose -f $${f} -p "pegasus-service" up -d --no-recreate || true ; done
 
 .PHONY: start-dev-system
 start-dev-system: docker-compose/system/docker-compose.*.yaml
-	@for f in $^; do COMPOSE_IGNORE_ORPHANS=True docker-compose -f $${f} -p "pegasus-system" up -d --no-recreate; done
+	@for f in $^; do COMPOSE_IGNORE_ORPHANS=True docker-compose -f $${f} -p "pegasus-system" up -d --no-recreate || true ; done
 
 .PHONY: start-dev-persistent
 start-dev-persistent: docker-compose/persistent/docker-compose.*.yaml
-	@for f in $^; do COMPOSE_IGNORE_ORPHANS=True docker-compose -f $${f} -p "pegasus-system" up -d --no-recreate; done
+	@for f in $^; do COMPOSE_IGNORE_ORPHANS=True docker-compose -f $${f} -p "pegasus-system" up -d --no-recreate --no-start || true ; done
 
 .PHONY: stop-dev-env # Stop and Remove current service only
 stop-dev-env:

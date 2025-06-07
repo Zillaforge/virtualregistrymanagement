@@ -1,7 +1,8 @@
-version: "2"
 services:
   pegasus-cloud-rabbitmq:
-    image: ociscloud/rabbitmq:3.9.13
+    profiles:
+      - ${RABBITMQ_DISABLE:-}  
+    image: bitnami/rabbitmq:3.10.25
     container_name: rabbitmq
     networks:
       pegasus-cloud-network:
