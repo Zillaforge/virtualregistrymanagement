@@ -1,0 +1,36 @@
+version: 0.0.6
+kind: VirtualRegistryManagementScheduler
+VirtualRegistryManagementScheduler:
+  instance: VirtualRegistryManagementScheduler
+  core_grpc:
+    hosts: ["vrm-server-release:5106"]
+    tls:
+      enable: false
+      cert_path: /root/server-csr/VRM.pem
+    connection_per_host: 3
+  tasks:
+    sync_projects:
+      cron_expression : "0 */1 * * * * *"
+    sync_tags:
+      cron_expression: "0 */10 * * * * *"
+    sync_exports:
+      cron_expression: "0 * * * * * *"
+    image_size:
+      cron_expression: "0 */1 * * * * *"
+      metering_service:
+        exchange: mts
+        routing_key: "vrm-image-size"
+    image_count:
+      cron_expression: "0 */1 * * * * *"
+      metering_service:
+        exchange: mts
+        routing_key: "vrm-image-count"
+    size_hard_limited_exceed:
+      cron_expression: "0 */10 * * * * *"
+    count_hard_limited_exceed:
+      cron_expression: "0 */10 * * * * *"
+event_consume:
+  # service 輸入指定的 Service Name 或 empty(不啟動) 
+  service: my_redis_sentinel
+  channels:
+  - FromIAM

@@ -3,18 +3,18 @@ kind: VirtualRegistryManagement
 VirtualRegistryManagement:
   instance: VirtualRegistryManagement
   developer: false
-  # http:
-    # host: 0.0.0.0:8106
-    # access_control:
-      # allow_origins: ["*"]
+  http:
+  #   host: 0.0.0.0:8109
+    access_control:
+      allow_origins: "*"
       # allow_credentials: true
-      # allow_headers: ["Origin", "Content-Length", "Content-Type", "Authorization"]
-      # allow_methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
-      # expose_headers: ["host-id", "version-id", "location-id"]
+      allow_headers: "*"
+      allow_methods: "*"
+      expose_headers: "*"
   grpc:
     host: 0.0.0.0:5106
     unix_socket: 
-      path: /VirtualRegistryManagement.sock
+      path: /run/VirtualRegistryManagement.sock
       conn_count: 20
     write_buffer_size: 32768
     read_buffer_size: 32768
@@ -133,7 +133,7 @@ event_publish:
     type: grpc
     binary_path: /var/lib/ASUS/EventPublishPlugin/eventpublishplugin
     config_path: /var/lib/ASUS/EventPublishPlugin/epp.yaml
-    socket_path: /eventpublishplugin.sock
+    socket_path: /run/eventpublishplugin.sock
     start_cmd_args:
       --redis-channel: FromVRM
 littlebell:

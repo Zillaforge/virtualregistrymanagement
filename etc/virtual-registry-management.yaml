@@ -47,7 +47,7 @@ VirtualRegistryManagement:
   #   cert_path: tls/hcs/pegasus-hcs.pem
   #   key_path: tls/hcs/pegasus-hcs-key.pem
   tracer:
-    enable: true
+    enable: false
     host: http://pegasus-cloud-jaeger:14268/api/traces
     timeout: 10
   filepath:
@@ -132,7 +132,7 @@ event_publish:
     type: grpc
     binary_path: /var/lib/ASUS/EventPublishPlugin/eventpublishplugin
     config_path: /var/lib/ASUS/EventPublishPlugin/eventpublishplugin.yaml
-    socket_path: /run/eventpublishplugin.sock
+    socket_path: /eventpublishplugin.sock
     start_cmd_args:
       --redis-channel: FromVRM
 littlebell:

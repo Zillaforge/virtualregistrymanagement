@@ -43,9 +43,25 @@
 							"args": [
 								"serve",
 								"--config",
-								"etc/virtual-registry-management.yaml"
+								"docker-compose/etc/vrm.yaml"
+							]
+						},
+						{
+							"name": "Launch Scheduler Service",
+							"type": "go",
+							"request": "launch",
+							"mode": "auto",
+							"program": "${workspaceFolder}",
+							"args": [
+								"scheduler",
+								"--config",
+								"docker-compose/etc/vrm.yaml",
+								"--scheduler-config",
+								"docker-compose/etc/vrm-scheduler.yaml",
+								"start"
 							]
 						}
+
 					]
 				}
 			}
@@ -59,11 +75,17 @@
 		"--network=proxy-network",
 		// "--network=pegasus-cloud-network"
 	],
-	// "mounts": [
-	// 	{
-	// 		"source": "pegasus-cloud-eventpublishplugin",
-	// 		"target": "/var/lib/ASUS/EventPublishPlugin",
-	// 		"type": "volume"
-	// 	}
-	// ]
+	"mounts": [
+		{
+			"source": "vscocde-golang-devcontainer",
+			"target": "/go",
+			"type": "volume"
+		},
+		// {
+		// 	"source": "pegasus-cloud-eventpublishplugin",
+		// 	"target": "/var/lib/ASUS/EventPublishPlugin",
+		// 	"type": "volume"
+		// }
+	],
+	"initializeCommand": "docker volume create  vscocde-golang-devcontainer"
 }

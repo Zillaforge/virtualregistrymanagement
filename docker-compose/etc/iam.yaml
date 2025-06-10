@@ -5,7 +5,7 @@ iam:
   host: 0.0.0.0:5051
   http_host: 0.0.0.0:8084
   request_timeout: 10
-  unix_socket: /PegasusIAM.sock
+  unix_socket: /run/PegasusIAM.sock
   http_attributes:
     access_control_allow:
       origin: "*"
@@ -141,6 +141,6 @@ event_publish:
     type: grpc
     binary_path: "/var/lib/ASUS/EventPublishPlugin/eventpublishplugin"
     config_path: "/var/lib/ASUS/EventPublishPlugin/epp.yaml"
-    socket_path: "/eventpublishplugin.sock"
+    socket_path: "/run/eventpublishplugin.sock"
     start_cmd_args:
       --redis-channel: FromIAM

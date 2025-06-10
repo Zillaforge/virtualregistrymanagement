@@ -2,7 +2,7 @@ plugin:
   name: EventPublishPlugin
   instance: EventPublishPlugin
   version: 0.1.2
-  socket_path: "/eventpublishplugin.sock"
+  socket_path: "/run/eventpublishplugin.sock"
   logger:
     system_log:
       path: log/
