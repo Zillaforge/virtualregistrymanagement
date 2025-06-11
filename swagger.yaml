@@ -61,6 +61,7 @@ paths:
         - "User/Project"
       parameters:
         - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -87,6 +88,7 @@ paths:
         - "User/Image"
       parameters:
         - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -136,6 +138,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -167,6 +170,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.serverId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -212,6 +216,7 @@ paths:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -245,6 +250,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.exportId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -270,6 +276,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.exportId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -292,6 +299,7 @@ paths:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -324,6 +332,7 @@ paths:
         - "User/Repository"
       parameters:
         - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -361,6 +370,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -386,6 +396,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -423,6 +434,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -445,6 +457,7 @@ paths:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -512,6 +525,7 @@ paths:
         - $ref: '#/components/parameters/path.repositoryId'
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -547,6 +561,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -584,6 +599,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -609,6 +625,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -646,6 +663,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -667,6 +685,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -702,6 +721,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -739,6 +759,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -775,6 +796,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.memberAclId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -796,6 +818,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '201':
           description: "Created"
@@ -823,6 +846,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -850,6 +874,13 @@ paths:
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
         - $ref: '#/components/parameters/query.namespace'
+        - $ref: '#/components/parameters/header.x-namespace'
+        - in: header
+          name: X-Namespace
+          schema:
+            type: string
+          required: false
+          description: Namespace for filtering projects
       responses:
         '200':
           description: "OK"
@@ -874,6 +905,7 @@ paths:
         - "Admin/Project"
       parameters:
         - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -896,6 +928,7 @@ paths:
       - "Admin/Repository"
       parameters:
         - $ref: '#/components/parameters/path.projectId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1022,6 +1055,7 @@ paths:
         - "Admin/Image"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1053,6 +1087,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/path.projectId'
         - $ref: '#/components/parameters/path.serverId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1097,6 +1132,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
+        - $ref: '#/components/parameters/query.namespace'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -1129,6 +1166,7 @@ paths:
       - "Admin/Export"
       parameters:
         - $ref: '#/components/parameters/path.exportId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1153,6 +1191,7 @@ paths:
       - "Admin/Export"
       parameters:
         - $ref: '#/components/parameters/path.exportId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -1175,6 +1214,7 @@ paths:
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
         - $ref: '#/components/parameters/query.namespace'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -1205,6 +1245,8 @@ paths:
         - bearerAuth: []
       tags:
         - "Admin/Repository"
+      parameters:
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1241,6 +1283,7 @@ paths:
       - "Admin/Repository"
       parameters:
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1265,6 +1308,7 @@ paths:
       - "Admin/Repository"
       parameters:
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1301,6 +1345,7 @@ paths:
       - "Admin/Repository"
       parameters:
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -1320,6 +1365,7 @@ paths:
       - "Admin/Repository"
       parameters:
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1348,6 +1394,7 @@ paths:
       - "Admin/Repository"
       parameters:
         - $ref: '#/components/parameters/path.repositoryId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1377,6 +1424,7 @@ paths:
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
         - $ref: '#/components/parameters/query.namespace'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -1409,6 +1457,8 @@ paths:
         - bearerAuth: []
       tags:
         - "Admin/Tag"
+      parameters:
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1445,6 +1495,7 @@ paths:
       - "Admin/Tag"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1469,6 +1520,7 @@ paths:
       - "Admin/Tag"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1505,6 +1557,7 @@ paths:
       - "Admin/Tag"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -1524,6 +1577,7 @@ paths:
       - "Admin/Tag"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1552,6 +1606,7 @@ paths:
       - "Admin/Tag"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '200':
           description: "OK"
@@ -1569,7 +1624,6 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-## member-acl api
   '/admin/tag/{tag-id}/memberacls':
     get:
       summary: 取得此 tag 的所有 member-acl
@@ -1582,6 +1636,7 @@ paths:
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
         - $ref: '#/components/parameters/query.namespace'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -1616,6 +1671,7 @@ paths:
         - "Admin/MemberAcl"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       requestBody:
         content:
           application/json:
@@ -1652,6 +1708,7 @@ paths:
       - "Admin/MemberAcl"
       parameters:
         - $ref: '#/components/parameters/path.memberAclId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -1672,6 +1729,7 @@ paths:
         - "Admin/ProjectAcl"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '201':
           description: "Created"
@@ -1698,6 +1756,7 @@ paths:
         - "Admin/ProjectAcl"
       parameters:
         - $ref: '#/components/parameters/path.tagId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -1720,6 +1779,7 @@ paths:
         - $ref: '#/components/parameters/query.limit'
         - $ref: '#/components/parameters/query.offset'
         - $ref: '#/components/parameters/query.namespace'
+        - $ref: '#/components/parameters/header.x-namespace'
         - in: query
           name: where
           schema:
@@ -1790,6 +1850,7 @@ paths:
         - "Admin/ProjectAcl"
       parameters:
         - $ref: '#/components/parameters/path.projectAclId'
+        - $ref: '#/components/parameters/header.x-namespace'
       responses:
         '204':
           $ref: '#/components/responses/204'
@@ -1890,6 +1951,13 @@ components:
           type: string
         required: false
         description: "取得公/私區資訊"
+      header.x-namespace:
+        in: header
+        name: X-Namespace
+        schema:
+          type: string
+        required: false
+        description: 識別請求是往公區或私區的Namespace。無值或非法值會回復403。
 
   ##
   #
