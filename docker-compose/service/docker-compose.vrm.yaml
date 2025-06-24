@@ -48,7 +48,7 @@ services:
 
   pegasus-cloud-vrm-scheduler-release:
     profiles:
-      - ${VRM_RELEASE_DISABLE:-}
+      - ${VRM_SCHEDULER_DISABLE:-}
     image: ociscloud/virtual-registry-management:0.0.6
     tty: true
     container_name: vrm-server-scheduler-release

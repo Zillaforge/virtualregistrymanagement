@@ -82,8 +82,8 @@ authentication:
 openstack:
   - namespace: public
     service: opstk
-  - namespace: private
-    service: opstk
+  # - namespace: private
+  #   service: opstk
 event_consume:
   # service 輸入指定的 Service Name 或 empty(不啟動) 
   service: my_redis_sentinel
@@ -114,7 +114,7 @@ services:
     domain_name: trustedcloud
     admin_project: 14735dfa-5553-46cc-b4bd-405e711b223f
     allow_reauth: true
-    pid_source: id # example: id, extra.tw-tc-ad1.opsk.uuid
+    pid_source: extra.tw-tc-ad1.opsk.uuid # example: id, extra.tw-tc-ad1.opsk.uuid
 metering_service:
   account: guest
   password: guest

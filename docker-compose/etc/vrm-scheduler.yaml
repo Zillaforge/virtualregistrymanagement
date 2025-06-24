@@ -29,8 +29,8 @@ VirtualRegistryManagementScheduler:
       cron_expression: "0 */10 * * * * *"
     count_hard_limited_exceed:
       cron_expression: "0 */10 * * * * *"
-event_consume:
-  # service 輸入指定的 Service Name 或 empty(不啟動) 
-  service: my_redis_sentinel
-  channels:
-  - FromIAM
+# event_consume:
+#   # service 輸入指定的 Service Name 或 empty(不啟動) 
+#   service: my_redis_sentinel
+#   channels:
+#   - FromIAM
