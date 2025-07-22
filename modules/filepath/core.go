@@ -9,7 +9,7 @@ import (
 
 	"github.com/spf13/cast"
 	"github.com/spf13/viper"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 var provider = map[string]filepathInterface{}

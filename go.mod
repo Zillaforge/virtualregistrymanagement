@@ -24,12 +24,12 @@ require (
 	gorm.io/datatypes v1.2.1
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.10
-	pegasus-cloud.com/aes/eventpublishpluginclient v0.2.3
-	pegasus-cloud.com/aes/meteringtoolkits v0.0.3
-	pegasus-cloud.com/aes/pegasusiamclient v1.8.3
-	pegasus-cloud.com/aes/toolkits v0.4.5
-	pegasus-cloud.com/aes/virtualplatformserviceclient v1.0.2
-	pegasus-cloud.com/aes/virtualregistrymanagementclient v0.0.5
+	github.com/Zillaforge/eventpublishpluginclient v0.2.3
+	github.com/Zillaforge/meteringtoolkits v0.0.3
+	github.com/Zillaforge/pegasusiamclient v1.8.3
+	github.com/Zillaforge/toolkits v0.4.5
+	github.com/Zillaforge/virtualplatformserviceclient v1.0.2
+	github.com/Zillaforge/virtualregistrymanagementclient v0.0.5
 )
 
 require (
@@ -97,5 +97,5 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241015192408-796eee8c2d53 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	pegasus-cloud.com/aes/pegasusmsgqueueclient v1.5.0 // indirect
+	github.com/Zillaforge/pegasusmsgqueueclient v1.5.0 // indirect
 )

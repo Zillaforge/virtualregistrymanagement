@@ -8,9 +8,9 @@ import (
 
 	"github.com/gophercloud/gophercloud/openstack/blockstorage/v3/volumes"
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (c *Cinder) DeleteVolume(ctx context.Context, input *common.DeleteVolumeInput) (output *common.DeleteVolumeOutput, err error) {

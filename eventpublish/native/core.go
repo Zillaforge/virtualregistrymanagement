@@ -2,7 +2,7 @@ package native
 
 import (
 	epCom "VirtualRegistryManagement/eventpublish/common"
-	// nsPlugin "pegasus-cloud.com/aes/plugin/nativesample/plugin"
+	// nsPlugin "github.com/Zillaforge/plugin/nativesample/plugin"
 )
 
 func EnableNativePlugins(name string) (plugin epCom.EventIntf) {

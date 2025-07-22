@@ -11,7 +11,7 @@ import (
 	ctlTag "VirtualRegistryManagement/controllers/grpc/tag"
 
 	"google.golang.org/grpc"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
 )
 
 func grpcRouters(srv *grpc.Server) {

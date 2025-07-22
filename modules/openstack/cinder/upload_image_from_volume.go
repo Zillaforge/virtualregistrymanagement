@@ -8,9 +8,9 @@ import (
 
 	"github.com/gophercloud/gophercloud/openstack/blockstorage/extensions/volumeactions"
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (c Cinder) UploadImageFromVolume(ctx context.Context, input *common.UploadImageFromVolumeInput) (output *common.UploadImageFromVolumeOutput, err error) {

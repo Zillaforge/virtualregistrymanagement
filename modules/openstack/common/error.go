@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 
 	"github.com/gophercloud/gophercloud"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 func IsKnownError(err error) (error, bool) {

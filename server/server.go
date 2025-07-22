@@ -25,12 +25,12 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	vpsUtil "pegasus-cloud.com/aes/virtualplatformserviceclient/utility"
-	"pegasus-cloud.com/aes/virtualplatformserviceclient/vps"
-	vrm "pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	vpsUtil "github.com/Zillaforge/virtualplatformserviceclient/utility"
+	"github.com/Zillaforge/virtualplatformserviceclient/vps"
+	vrm "github.com/Zillaforge/virtualregistrymanagementclient/vrm"
 )
 
 var srvHTTP *http.Server

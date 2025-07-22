@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/scheduler"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/scheduler"
 )
 
 const (

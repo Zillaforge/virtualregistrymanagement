@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/eventpublishpluginclient/epp"
-	eppUtil "pegasus-cloud.com/aes/eventpublishpluginclient/utility"
+	"github.com/Zillaforge/eventpublishpluginclient/epp"
+	eppUtil "github.com/Zillaforge/eventpublishpluginclient/utility"
 )
 
 type newGRPCConnInput struct {

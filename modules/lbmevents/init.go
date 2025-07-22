@@ -5,9 +5,9 @@ import (
 	authCom "VirtualRegistryManagement/authentication/common"
 	"VirtualRegistryManagement/constants"
 
-	"pegasus-cloud.com/aes/toolkits/littlebell"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	"github.com/Zillaforge/toolkits/littlebell"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 func Init() {

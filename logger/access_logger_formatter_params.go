@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	pbac "pegasus-cloud.com/aes/toolkits/pbac/gin"
+	pbac "github.com/Zillaforge/toolkits/pbac/gin"
 )
 
 type AccessFormatterParams struct {

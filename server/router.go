@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	tkMid "pegasus-cloud.com/aes/toolkits/middleware"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	tkMid "github.com/Zillaforge/toolkits/middleware"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 func router() *gin.Engine {

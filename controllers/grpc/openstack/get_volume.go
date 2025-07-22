@@ -9,11 +9,11 @@ import (
 	"time"
 
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	cCnt "pegasus-cloud.com/aes/virtualregistrymanagementclient/constants"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	cCnt "github.com/Zillaforge/virtualregistrymanagementclient/constants"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
 )
 
 func (m *Method) GetVolume(ctx context.Context, input *pb.GetOpenstackInput) (output *pb.VolumeInfo, err error) {

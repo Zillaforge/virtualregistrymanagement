@@ -10,8 +10,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtil "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtil "github.com/Zillaforge/toolkits/utilities"
 )
 
 type DetailVersionOutput struct {

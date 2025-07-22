@@ -12,9 +12,9 @@ import (
 
 	"github.com/spf13/cast"
 	"github.com/spf13/viper"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/flatten"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/flatten"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 const _openstackKind string = "openstack"

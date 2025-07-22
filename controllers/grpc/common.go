@@ -15,9 +15,9 @@ import (
 
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	cCnt "pegasus-cloud.com/aes/virtualregistrymanagementclient/constants"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	cCnt "github.com/Zillaforge/virtualregistrymanagementclient/constants"
 )
 
 // A generic empty message that you can re-use to avoid defining duplicated

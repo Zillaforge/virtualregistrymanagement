@@ -4,7 +4,7 @@ import (
 	cnt "VirtualRegistryManagement/constants"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/eventpublishpluginclient/pb"
+	"github.com/Zillaforge/eventpublishpluginclient/pb"
 )
 
 func (c *core) SetConfig(conf []byte) {

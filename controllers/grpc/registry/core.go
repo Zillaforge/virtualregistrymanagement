@@ -4,7 +4,7 @@ import (
 	"VirtualRegistryManagement/storages/tables"
 	"time"
 
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
 )
 
 // Method is implement all methods as pb.RegistryCRUDControllerServer

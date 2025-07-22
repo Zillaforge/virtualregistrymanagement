@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 // MigrationHistoryCMD ...

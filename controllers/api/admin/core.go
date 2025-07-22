@@ -5,7 +5,7 @@ import (
 	authComm "VirtualRegistryManagement/authentication/common"
 	"VirtualRegistryManagement/modules/openstack"
 
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 func namespaceIsLegal(namespace string) bool {

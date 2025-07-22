@@ -4,7 +4,7 @@ import (
 	cnt "VirtualRegistryManagement/constants"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 func (c *core) GetVersion() (v string) {

@@ -17,7 +17,7 @@ import (
 	EB "github.com/asaskevich/EventBus"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 var (

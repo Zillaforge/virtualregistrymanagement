@@ -3,7 +3,7 @@ package iam
 import (
 	"VirtualRegistryManagement/services"
 
-	"pegasus-cloud.com/aes/pegasusiamclient/iam"
+	"github.com/Zillaforge/pegasusiamclient/iam"
 )
 
 type Input struct {

@@ -5,9 +5,9 @@ import (
 	"context"
 
 	"google.golang.org/protobuf/types/known/emptypb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
 )
 
 // Method is implement all methods as pb.ProjectCRUDControllerServer

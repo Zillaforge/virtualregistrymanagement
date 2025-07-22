@@ -1,6 +1,6 @@
 package common
 
-import "pegasus-cloud.com/aes/pegasusiamclient/pb"
+import "github.com/Zillaforge/pegasusiamclient/pb"
 
 type ListProjectsInput struct {
 	Limit  int32

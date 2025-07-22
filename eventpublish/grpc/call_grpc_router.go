@@ -4,9 +4,9 @@ import (
 	cnt "VirtualRegistryManagement/constants"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/eventpublishpluginclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	"github.com/Zillaforge/eventpublishpluginclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 func (c *core) CallGRPCRouter(operator string, hdr map[string]string, payload []byte) (map[string]string, []byte, error) {

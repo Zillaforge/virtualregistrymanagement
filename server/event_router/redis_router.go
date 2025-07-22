@@ -10,8 +10,8 @@ import (
 	iamCtl "VirtualRegistryManagement/controllers/iamconsumer"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func IAMConsumerRouter(ctx context.Context, message interface{}) {

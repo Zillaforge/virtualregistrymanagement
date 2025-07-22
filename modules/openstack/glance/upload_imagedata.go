@@ -9,9 +9,9 @@ import (
 
 	"github.com/gophercloud/gophercloud/openstack/imageservice/v2/imagedata"
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (g *Glance) UploadImageData(ctx context.Context, input *common.UploadImageDataInput) (output *common.UploadImageDataOutput, err error) {

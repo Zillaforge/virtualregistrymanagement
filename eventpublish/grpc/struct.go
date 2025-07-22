@@ -3,7 +3,7 @@ package grpc
 import (
 	"os/exec"
 
-	"pegasus-cloud.com/aes/eventpublishpluginclient/epp"
+	"github.com/Zillaforge/eventpublishpluginclient/epp"
 )
 
 type core struct {

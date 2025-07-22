@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	tkMid "pegasus-cloud.com/aes/toolkits/middleware"
-	pbac "pegasus-cloud.com/aes/toolkits/pbac/gin"
+	tkMid "github.com/Zillaforge/toolkits/middleware"
+	pbac "github.com/Zillaforge/toolkits/pbac/gin"
 )
 
 func APIOperationMiddleware(c *gin.Context) {

@@ -6,8 +6,8 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/eventpublishpluginclient/pb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	"github.com/Zillaforge/eventpublishpluginclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 func (c *core) Reconcile(action string, meta map[string]string, req interface{}, resp interface{}) {

@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"time"
 
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/memkvdb"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/memkvdb"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 func RetrieveFromCache(key string, isReadFromCache bool, out interface{}, missCallback func() error, add2Cache func() interface{}) error {

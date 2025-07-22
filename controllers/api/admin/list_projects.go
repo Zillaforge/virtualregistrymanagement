@@ -8,11 +8,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/virtualregistrymanagementclient/vrm"
 )
 
 type ListProjectsInput struct {

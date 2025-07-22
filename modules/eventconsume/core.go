@@ -9,8 +9,8 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
 )
 
 type Provider interface {

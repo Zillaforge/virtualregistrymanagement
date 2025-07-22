@@ -10,9 +10,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/eventpublishpluginclient/pb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtil "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/eventpublishpluginclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtil "github.com/Zillaforge/toolkits/utilities"
 )
 
 // HttpRouterToGrpc is unAuthentication api

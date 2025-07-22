@@ -6,10 +6,10 @@ import (
 	"context"
 
 	"go.uber.org/zap"
-	protos "pegasus-cloud.com/aes/pegasusiamclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtil "pegasus-cloud.com/aes/toolkits/utilities"
+	protos "github.com/Zillaforge/pegasusiamclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtil "github.com/Zillaforge/toolkits/utilities"
 )
 
 /*

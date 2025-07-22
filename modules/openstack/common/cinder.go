@@ -10,8 +10,8 @@ import (
 	"github.com/gophercloud/gophercloud/openstack/blockstorage/extensions/volumeactions"
 	"github.com/gophercloud/gophercloud/openstack/blockstorage/v3/snapshots"
 	"github.com/gophercloud/gophercloud/openstack/blockstorage/v3/volumes"
-	"pegasus-cloud.com/aes/toolkits/flatten"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/flatten"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 type snapshotStatus string

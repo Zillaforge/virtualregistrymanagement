@@ -14,11 +14,11 @@ import (
 	"syscall"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/meteringtoolkits/metering"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	vrm "pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+	"github.com/Zillaforge/meteringtoolkits/metering"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	vrm "github.com/Zillaforge/virtualregistrymanagementclient/vrm"
 )
 
 func RunScheduler() {

@@ -4,8 +4,8 @@ import (
 	cnt "VirtualRegistryManagement/constants"
 	"math"
 
-	tkCfg "pegasus-cloud.com/aes/toolkits/configs"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	tkCfg "github.com/Zillaforge/toolkits/configs"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 func init() {

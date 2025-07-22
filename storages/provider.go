@@ -7,7 +7,7 @@ import (
 	"VirtualRegistryManagement/storages/mariadb"
 	mariadbCom "VirtualRegistryManagement/storages/mariadb/common"
 
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 const (

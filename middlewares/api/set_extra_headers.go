@@ -4,9 +4,9 @@ import (
 	cnt "VirtualRegistryManagement/constants"
 
 	"github.com/gin-gonic/gin"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtil "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtil "github.com/Zillaforge/toolkits/utilities"
 )
 
 // SetExtraHeaders ...SetExtraHeaders

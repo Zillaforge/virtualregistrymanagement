@@ -9,10 +9,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
-	"pegasus-cloud.com/aes/toolkits/configs"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtil "pegasus-cloud.com/aes/toolkits/utilities"
+	"github.com/Zillaforge/toolkits/configs"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtil "github.com/Zillaforge/toolkits/utilities"
 )
 
 // GetSystemConfigurationsOutput ...

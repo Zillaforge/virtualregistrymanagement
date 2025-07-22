@@ -1,6 +1,6 @@
 package lbmevents
 
-import "pegasus-cloud.com/aes/toolkits/littlebell"
+import "github.com/Zillaforge/toolkits/littlebell"
 
 type (
 	CountHardLimitedExceedEvent struct{ littlebell.MessageStruct }

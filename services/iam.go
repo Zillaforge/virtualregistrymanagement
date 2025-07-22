@@ -5,8 +5,8 @@ import (
 
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/pegasusiamclient/iam"
-	iamUtil "pegasus-cloud.com/aes/pegasusiamclient/utility"
+	"github.com/Zillaforge/pegasusiamclient/iam"
+	iamUtil "github.com/Zillaforge/pegasusiamclient/utility"
 )
 
 func InitIAM(svcCfg *viper.Viper) (err error) {

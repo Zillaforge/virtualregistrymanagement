@@ -9,9 +9,9 @@ import (
 	"encoding/json"
 
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
 )
 
 type (

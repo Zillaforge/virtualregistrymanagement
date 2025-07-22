@@ -11,14 +11,14 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	iamPB "pegasus-cloud.com/aes/pegasusiamclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/mviper"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	cCnt "pegasus-cloud.com/aes/virtualregistrymanagementclient/constants"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+	iamPB "github.com/Zillaforge/pegasusiamclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	cCnt "github.com/Zillaforge/virtualregistrymanagementclient/constants"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/virtualregistrymanagementclient/vrm"
 )
 
 func UnmarshalCreateProject(input *ecCom.Data) (output *iamPB.ProjectID) {

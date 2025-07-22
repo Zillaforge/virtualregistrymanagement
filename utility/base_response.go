@@ -2,7 +2,7 @@ package utility
 
 import (
 	"github.com/gin-gonic/gin"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 type (

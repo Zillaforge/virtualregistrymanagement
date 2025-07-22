@@ -13,12 +13,12 @@ import (
 	"encoding/json"
 
 	"go.uber.org/zap"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	cCnt "pegasus-cloud.com/aes/virtualregistrymanagementclient/constants"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	cCnt "github.com/Zillaforge/virtualregistrymanagementclient/constants"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/virtualregistrymanagementclient/vrm"
 )
 
 // 若 reference_target 有值，則從 openstack 取得其相關資訊並創建 tag

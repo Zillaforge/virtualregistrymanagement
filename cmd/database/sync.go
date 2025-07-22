@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 // SyncCmd ...

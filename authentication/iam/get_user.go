@@ -8,11 +8,11 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	iamCnt "pegasus-cloud.com/aes/pegasusiamclient/constants"
-	protos "pegasus-cloud.com/aes/pegasusiamclient/pb"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
+	iamCnt "github.com/Zillaforge/pegasusiamclient/constants"
+	protos "github.com/Zillaforge/pegasusiamclient/pb"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
 )
 
 func (h *Provider) GetUser(ctx context.Context, input *common.GetUserInput) (output *common.GetUserOutput, err error) {

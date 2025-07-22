@@ -7,11 +7,11 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	"pegasus-cloud.com/aes/virtualplatformserviceclient/pb"
-	"pegasus-cloud.com/aes/virtualplatformserviceclient/vps"
+	tkErr "github.com/Zillaforge/toolkits/errors"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	"github.com/Zillaforge/virtualplatformserviceclient/pb"
+	"github.com/Zillaforge/virtualplatformserviceclient/vps"
 )
 
 const (

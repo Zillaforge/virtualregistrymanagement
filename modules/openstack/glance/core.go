@@ -4,7 +4,7 @@ import (
 	cnt "VirtualRegistryManagement/constants"
 
 	"github.com/gophercloud/gophercloud"
-	tkErr "pegasus-cloud.com/aes/toolkits/errors"
+	tkErr "github.com/Zillaforge/toolkits/errors"
 )
 
 type Glance struct {

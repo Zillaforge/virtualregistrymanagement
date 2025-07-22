@@ -11,11 +11,11 @@ import (
 	"fmt"
 
 	"go.uber.org/zap"
-	iamPB "pegasus-cloud.com/aes/pegasusiamclient/pb"
-	"pegasus-cloud.com/aes/toolkits/tracer"
-	tkUtils "pegasus-cloud.com/aes/toolkits/utilities"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/pb"
-	"pegasus-cloud.com/aes/virtualregistrymanagementclient/vrm"
+	iamPB "github.com/Zillaforge/pegasusiamclient/pb"
+	"github.com/Zillaforge/toolkits/tracer"
+	tkUtils "github.com/Zillaforge/toolkits/utilities"
+	"github.com/Zillaforge/virtualregistrymanagementclient/pb"
+	"github.com/Zillaforge/virtualregistrymanagementclient/vrm"
 )
 
 func UnmarshalDeleteUser(input *ecCom.Data) (output *iamPB.UserID) {

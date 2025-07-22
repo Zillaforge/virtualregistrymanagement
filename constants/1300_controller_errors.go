@@ -1,6 +1,6 @@
 package constants
 
-import tkErr "pegasus-cloud.com/aes/toolkits/errors"
+import tkErr "github.com/Zillaforge/toolkits/errors"
 
 const (
 	// 1300xxxx: Controller

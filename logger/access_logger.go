@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"gopkg.in/natefinch/lumberjack.v2"
-	"pegasus-cloud.com/aes/toolkits/mviper"
+	"github.com/Zillaforge/toolkits/mviper"
 )
 
 type TriggerType string
