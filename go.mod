@@ -3,6 +3,12 @@ module VirtualRegistryManagement
 go 1.22.4
 
 require (
+	github.com/Zillaforge/eventpublishpluginclient v0.2.3
+	github.com/Zillaforge/meteringtoolkits v0.0.3
+	github.com/Zillaforge/pegasusiamclient v1.8.3
+	github.com/Zillaforge/toolkits v0.4.5
+	github.com/Zillaforge/virtualplatformserviceclient v1.0.2
+	github.com/Zillaforge/virtualregistrymanagementclient v0.0.5
 	github.com/alitto/pond v1.9.2
 	github.com/asaskevich/EventBus v0.0.0-20200907212545-49d423059eef
 	github.com/gin-contrib/cors v1.7.3
@@ -24,16 +30,11 @@ require (
 	gorm.io/datatypes v1.2.1
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.10
-	github.com/Zillaforge/eventpublishpluginclient v0.2.3
-	github.com/Zillaforge/meteringtoolkits v0.0.3
-	github.com/Zillaforge/pegasusiamclient v1.8.3
-	github.com/Zillaforge/toolkits v0.4.5
-	github.com/Zillaforge/virtualplatformserviceclient v1.0.2
-	github.com/Zillaforge/virtualregistrymanagementclient v0.0.5
 )
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/Zillaforge/pegasusmsgqueueclient v1.5.0 // indirect
 	github.com/aws/aws-sdk-go v1.54.15 // indirect
 	github.com/bytedance/sonic v1.12.6 // indirect
 	github.com/bytedance/sonic/loader v0.2.1 // indirect
@@ -97,5 +98,4 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241015192408-796eee8c2d53 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	github.com/Zillaforge/pegasusmsgqueueclient v1.5.0 // indirect
 )
