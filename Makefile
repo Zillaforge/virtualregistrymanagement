@@ -55,7 +55,7 @@ release:
 	@make set-version
 	@mkdir -p tmp
 	@rm -rf tmp/$(OS)
-	@docker run --name build-env -v ${PWD}/..:/home -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
+	@docker run --name build-env -v ${PWD}/..:/home -w /home/virtualregistrymanagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
 	@docker rm -f build-env
 	@mkdir tmp/$(OS)
 	@mv tmp/$(PROJECT)* tmp/$(OS)
@@ -65,7 +65,7 @@ release-image:
 	@make set-version
 	@rm -rf build/scratch_image/tmp
 	@rm -rf tmp/container
-	@docker run --name build-env -v ${PWD}/..:/home -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
+	@docker run --name build-env -v ${PWD}/..:/home -w /home/virtualregistrymanagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
 	@docker rm -f build-env
 	@mkdir -p tmp/container
 	@docker rmi -f $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION)
