@@ -1,4 +1,4 @@
-OWNER ?= ociscloud
+OWNER ?= Zillaforge
 PROJECT ?= VirtualRegistryManagement
 ABBR ?= vrm
 IMAGE_NAME ?= virtual-registry-management
@@ -8,7 +8,6 @@ ARCH ?= $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
 PREVERSION ?= 0.0.6
 VERSION ?= $(shell cat VERSION)
 PWD := $(shell pwd)
-GO_PROXY ?= "https://proxy.golang.org,http://proxy.pegasus-cloud.com:8078"
 
 # Release Mode could be dev or prod,
 # dev: default, will add commit id to version
@@ -56,7 +55,7 @@ release:
 	@make set-version
 	@mkdir -p tmp
 	@rm -rf tmp/$(OS)
-	@docker run --name build-env -e GOPROXY=$(GO_PROXY) -e GOSUMDB="off" --network=host -v ${PWD}/..:/home -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
+	@docker run --name build-env -v ${PWD}/..:/home -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make OS=$(OS) build
 	@docker rm -f build-env
 	@mkdir tmp/$(OS)
 	@mv tmp/$(PROJECT)* tmp/$(OS)
@@ -66,7 +65,7 @@ release-image:
 	@make set-version
 	@rm -rf build/scratch_image/tmp
 	@rm -rf tmp/container
-	@docker run --name build-env -e GOPROXY=$(GO_PROXY) -e GOSUMDB="off" --network=host -v ${PWD}/..:/home -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
+	@docker run --name build-env -v ${PWD}/..:/home -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-$(ARCH) make build-container
 	@docker rm -f build-env
 	@mkdir -p tmp/container
 	@docker rmi -f $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION)
@@ -85,14 +84,10 @@ push-image:
 
 .PHONY: start
 start:
-	@go env -w GOPROXY=$(GO_PROXY)
-	@go env -w GOSUMDB="off"
 	@go run main.go -c etc/virtual-registry-management.yaml serve
 
 .PHONY: start-scheduler
 start-scheduler:
-	@go env -w GOPROXY=$(GO_PROXY)
-	@go env -w GOSUMDB="off"
 	@go run main.go -c etc/virtual-registry-management.yaml -s etc/vrm-scheduler.yaml scheduler start
 
 .PHONY: init
@@ -152,7 +147,7 @@ build-container:
 release-alpine-image:
 	@make set-version
 	@rm -rf build/alpine_image/tmp
-	@docker run --name build-env -e GOPROXY=$(GO_PROXY) -e GOSUMDB="off" --network=host -v $(PWD):/home/VirtualRegistryManagement -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-amd64 make build-alpine-image
+	@docker run --name build-env -v $(PWD):/home/VirtualRegistryManagement -w /home/VirtualRegistryManagement $(OWNER)/golang:$(GOVERSION)-$(OS)-amd64 make build-alpine-image
 	@docker rm -f build-env
 	@docker rmi -f $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION)
 	@docker build -t $(OWNER)/$(IMAGE_NAME):$(RELEASE_VERSION) build/alpine_image/
